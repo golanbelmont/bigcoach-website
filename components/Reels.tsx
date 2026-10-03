@@ -356,7 +356,7 @@ export default function Reels() {
       </span>
       <div className="reels-head reveal">
         <h2>ככה נראית ההתחלה האחרונה.</h2>
-        <p>רגעים אמיתיים מהאימונים, מהסטודיו ומהדרך. בלי פילטרים ובלי תסריט.</p>
+        <p>מתאמנים אמיתיים מספרים על התהליך, במילים שלהם. בלי פילטרים ובלי תסריט.</p>
       </div>
       <div className={`reels-strip reveal${native ? ' native' : ''}`} data-d="1" id="reelsStrip" ref={stripRef}>
         <div className="reels-track" id="reelsTrack" ref={trackRef}>
