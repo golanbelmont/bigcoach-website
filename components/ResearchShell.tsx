@@ -14,13 +14,13 @@ export default function ResearchShell({ children }: { children: React.ReactNode 
         <Link href="/" className="r-logo" aria-label="BIG COACH, חזרה לדף הבית">
           <Ph img="logo.png" alt="BIG COACH לוגו" sizes="200px" position="right center" />
         </Link>
-        <nav className="r-nav" aria-label="ניווט">
+        <div className="r-nav" role="navigation" aria-label="ניווט">
           <Link href="/research">כל המחקרים</Link>
           <Link href="/">לאתר</Link>
           <a href={WA_GENERAL} target="_blank" className="r-cta">
             <WaIcon /> שיחת היכרות
           </a>
-        </nav>
+        </div>
       </header>
       <main id="rmain">{children}</main>
       <footer className="r-foot">
