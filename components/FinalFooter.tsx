@@ -90,6 +90,9 @@ export default function FinalFooter() {
                 <a href="#testimonials">תוצאות</a>
               </li>
               <li>
+                <a href="/research">מחקרים</a>
+              </li>
+              <li>
                 <a href="#faq">שאלות נפוצות</a>
               </li>
               <li>
