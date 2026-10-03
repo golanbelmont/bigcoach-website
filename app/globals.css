@@ -448,7 +448,9 @@ h2{font-size:clamp(2.1rem,4.2vw,3.5rem);font-weight:800;line-height:1.12;letter-
 #final{position:relative;margin:var(--gap);border-radius:var(--radius-xl);overflow:hidden;padding:0}
 .final-bg{position:absolute;inset:0}
 .final-bg .ph{width:100%;height:100%;border:none;border-radius:0}
-.final-bg::after{content:'';position:absolute;inset:0;background:rgba(27,27,26,.9)}
+.final-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(27,27,26,.5) 0%,rgba(27,27,26,.62) 38%,rgba(27,27,26,.9) 62%,rgba(27,27,26,.96) 100%)}
+.final-bg .ph>img{animation:slowZoom 24s ease-in-out infinite alternate}
+@keyframes slowZoom{from{transform:scale(1)}to{transform:scale(1.07)}}
 .final-inner{position:relative;z-index:2;padding:7rem var(--pad-x) 3rem}
 .cta-marquee{display:block;overflow:hidden;margin-bottom:5rem;cursor:pointer}
 .cta-marquee:hover .dot{background:var(--red);color:#fff;transform:rotate(45deg)}

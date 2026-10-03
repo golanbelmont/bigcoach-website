@@ -14,7 +14,7 @@ export default function FinalFooter() {
   return (
     <footer id="final">
       <div className="final-bg">
-        <Ph img="footer-bg.jpg" alt="" label="footer-bg.jpg (1920×1080)" sizes="(max-width:860px) 178vh, 100vw" quality={75} />
+        <Ph img="hero.jpg" alt="" label="הסטודיו" sizes="(max-width:860px) 178vh, 100vw" quality={75} position="72% 38%" />
       </div>
       <div className="final-inner">
         <p className="final-kicker">ההתחלה האחרונה שלך מתחילה בהודעה אחת.</p>
