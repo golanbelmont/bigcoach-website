@@ -94,10 +94,14 @@ export default async function ResearchPage({ params }: { params: Promise<{ slug:
                 <summary>מקורות ({s.sources.length})</summary>
                 <ol>
                   {s.sources.map(src => (
-                    <li key={src.url}>
-                      <a href={src.url} target="_blank" rel="noopener noreferrer">
-                        {src.label}
-                      </a>
+                    <li key={src.label}>
+                      {src.url ? (
+                        <a href={src.url} target="_blank" rel="noopener noreferrer">
+                          {src.label}
+                        </a>
+                      ) : (
+                        src.label
+                      )}
                     </li>
                   ))}
                 </ol>
