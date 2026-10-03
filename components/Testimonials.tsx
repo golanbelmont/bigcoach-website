@@ -24,7 +24,6 @@ export default function Testimonials() {
   useEffect(() => {
     const el = sliderRef.current
     if (!el) return
-    if (matchMedia('(prefers-reduced-motion:reduce)').matches) return
     /*
      * מעבר אוטומטי כרטיס אחרי כרטיס (עובד יחד עם ה-snap, במחשב ובטלפון).
      * באג קודם: גלילה של פיקסל-פיקסל נלחמה ב-scroll-snap והסליידר נתקע, ובמגע זה היה כבוי.

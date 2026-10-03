@@ -212,7 +212,7 @@ export default function Reels() {
     const strip = stripRef.current
     const track = trackRef.current
     if (!section || !strip || !track) return
-    const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches
+    const reduced = false // בהחלטת הלקוח: הקרוסלה זזה גם כש-Windows מכבה אנימציות
     let off = 0,
       gw = 0,
       drag = false,
@@ -303,7 +303,6 @@ export default function Reels() {
     const section = sectionRef.current
     const strip = stripRef.current
     if (!section || !strip) return
-    if (matchMedia('(prefers-reduced-motion:reduce)').matches) return
     let visible = false
     let lastTouch = 0
     const touched = () => (lastTouch = Date.now())

@@ -9,7 +9,6 @@ export default function Cnum({ count }: { count: number }) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    if (matchMedia('(prefers-reduced-motion:reduce)').matches) return
     // ב-HTML המספר הסופי (אם ה-JS לא רץ, לא נתקעים על 0). מאפסים רק אם המונה עוד לא על המסך.
     if (el.getBoundingClientRect().top < innerHeight) return
     el.textContent = '0'

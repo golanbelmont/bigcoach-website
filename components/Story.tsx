@@ -17,7 +17,7 @@ export default function Story() {
     const lines = [...story.querySelectorAll<HTMLElement>('.story-line:not(.story-frags),.frag')]
     // לכל שורה: האלמנט שלפיו ממרכזים (פרגמנט → השורה שמכילה אותו)
     const anchors = lines.map(l => (l.classList.contains('frag') ? (l.parentElement as HTMLElement) : l))
-    const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches
+    const reduced = false // בהחלטת הלקוח: האנימציה רצה גם כש-Windows מכבה אנימציות
     let raf = 0
     /*
      * כל שורה צמודה ישירות למיקום הגלילה (scrub), בלי החלקה ובלי transition.

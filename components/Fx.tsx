@@ -72,7 +72,8 @@ export default function Fx() {
     let sHero = 0
     const mobile = matchMedia('(max-width:860px)')
     const reduced = matchMedia('(prefers-reduced-motion:reduce)')
-    const off = () => mobile.matches || reduced.matches
+    const off = () => mobile.matches // בהחלטת הלקוח: לא מכבים לפי reduced-motion
+    void reduced
     // במובייל ה-floaters מוסתרים — לא מודדים אותם (חוסך forced reflow בזמן ההידרציה)
     const floaters = off() ? [] : [...document.querySelectorAll<HTMLElement>('.floater')]
     const bases = floaters.map(f => f.getBoundingClientRect().top + scrollY)
@@ -123,7 +124,8 @@ export default function Fx() {
   useEffect(() => {
     const fine = matchMedia('(hover:hover) and (pointer:fine)').matches
     const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches
-    if (!fine || reduced) return
+    if (!fine) return
+    void reduced
 
     const cleanups: (() => void)[] = []
     const dot = document.createElement('div')

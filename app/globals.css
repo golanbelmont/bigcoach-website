@@ -102,10 +102,6 @@ a:hover>.mask .t2,button:hover>.mask .t2{transform:translateY(0)}
 .hero-cta-row{animation:inUp .8s 1.35s cubic-bezier(.25,.8,.3,1) both}
 .hero-note{animation:inUp .8s 1.45s cubic-bezier(.25,.8,.3,1) both}
 .fab-dock{animation:fabIn .6s 1.5s cubic-bezier(.25,.8,.3,1) both}
-@media (prefers-reduced-motion:reduce){
-  .hero-bg,.nav-logo,.btn-join,.hero-badge,.hero-sub,.hero-cta-row,.hero-note,.hero-cut,.fab-dock{animation:none}
-  #hero h1 .hl>span{animation:none;transform:none}
-}
 
 /* ───────── NAVBAR ───────── */
 nav:not(.menu-overlay){position:absolute;top:0;right:0;left:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:2.6rem var(--pad-x) 0;pointer-events:none}
@@ -757,18 +753,7 @@ html,body{max-width:100%;overflow-x:clip}
   .lead-card{padding:2.2rem 1.6rem 1.8rem;border-radius:22px}
   .lead-card h2{font-size:1.75rem}
 }
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .reveal{opacity:1;transform:none}
-  .grain{display:none}
-  .story-line,.frag{opacity:1;transform:none;max-width:none}
-  .rv-h,.rv-img{opacity:1;transform:none;filter:none;clip-path:none}
-  .method-grid .mcard{opacity:1;transform:none}
-  .micon svg *{stroke-dashoffset:0!important}
-  .floater{display:none}
-  .cursor-dot,.cursor-ring{display:none}
-  .prog-slide.active .prog-title,.prog-slide.active .prog-cap,.prog-slide.active .prog-keep,.prog-slide.active .prog-plus{opacity:1;transform:none}
-  .prog-bg .ph>img{transform:none}
+/* reduced-motion: בהחלטת הלקוח (2026-10) האנימציות רצות גם כשהמערכת מבקשת פחות תנועה. נשאר רק להסתיר את הסמן המותאם. */
 }
 
 /* ───────── REACT REBUILD: SMOOTHNESS ADDENDUM ───────── */
@@ -798,10 +783,6 @@ main h2.rv-h{position:relative}
 main h2.rv-h::after{content:'';display:block;width:64px;height:4px;border-radius:4px;background:var(--red);margin:1rem 0 0;transform:scaleX(0);transform-origin:right;transition:transform .9s .35s cubic-bezier(.22,.7,.3,1)}
 main h2.rv-h.in::after{transform:scaleX(1)}
 main h2.rv-h.h-center::after{margin-inline:auto;transform-origin:center}
-@media (prefers-reduced-motion:reduce){
-  .btn-light::before,.live-dot{animation:none!important}
-  main h2.rv-h::after{transform:none}
-}
 
 /* ───────── 2026-10: מדור מחקרים ───────── */
 #research{background:var(--black)}
