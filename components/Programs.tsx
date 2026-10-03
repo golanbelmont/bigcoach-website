@@ -309,7 +309,7 @@ export default function Programs() {
             data-prog
           >
             <div className="prog-bg">
-              <Ph img={prog.img} alt="" label={prog.imgLabel} sizes="100vw" quality={60} />
+              <Ph img={prog.img} alt="" label={prog.imgLabel} sizes="100vw" quality={85} />
             </div>
             <div className="stage-ui">
               <StageUI prog={prog} open={open === i} onToggle={() => toggle(i)} />

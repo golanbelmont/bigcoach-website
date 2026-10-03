@@ -9,15 +9,15 @@ export default function Cnum({ count }: { count: number }) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    if (matchMedia('(prefers-reduced-motion:reduce)').matches) return
+    // ב-HTML המספר הסופי (אם ה-JS לא רץ, לא נתקעים על 0). מאפסים רק אם המונה עוד לא על המסך.
+    if (el.getBoundingClientRect().top < innerHeight) return
+    el.textContent = '0'
     const io = new IntersectionObserver(
       es =>
         es.forEach(en => {
           if (!en.isIntersecting) return
           io.unobserve(en.target)
-          if (matchMedia('(prefers-reduced-motion:reduce)').matches) {
-            el.textContent = count.toLocaleString('en-US')
-            return
-          }
           const dur = 1400
           const t0 = performance.now()
           const tick = (t: number) => {
@@ -36,7 +36,7 @@ export default function Cnum({ count }: { count: number }) {
 
   return (
     <span ref={ref} className="cnum">
-      0
+      {count.toLocaleString('en-US')}
     </span>
   )
 }

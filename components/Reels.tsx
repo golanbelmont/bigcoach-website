@@ -1,69 +1,34 @@
 'use client'
 
-import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState, type MutableRefObject } from 'react'
 import { vidUrl } from '@/lib/assets'
 
-type Item = { type: 'yt'; id: string } | { type: 'vid'; file: string }
+/*
+ * יוטיוב: `thumb` = איכות התמונה הכי גבוהה שקיימת לסרטון (hq720 = 1280×720, נחתך למרכז הכרטיס).
+ * לסרטון בלי hq720 נשארים על hqdefault.
+ */
+type Item = { type: 'yt'; id: string; thumb: 'hq720' | 'hqdefault' } | { type: 'vid'; file: string }
 
 // מעורבב: אחסון / יוטיוב / אחסון / יוטיוב... (4 יוטיוב + 6 אחסון)
 const ITEMS: Item[] = [
   { type: 'vid', file: 'testi-vid-1.mp4' },
-  { type: 'yt', id: 'VJTshfTBQIM' },
+  { type: 'yt', id: 'VJTshfTBQIM', thumb: 'hqdefault' },
   { type: 'vid', file: 'testi-vid-2.mp4' },
-  { type: 'yt', id: '4N_29s27YKY' },
+  { type: 'yt', id: '4N_29s27YKY', thumb: 'hq720' },
   { type: 'vid', file: 'testi-vid-3.mp4' },
-  { type: 'yt', id: 'dgIMahX3bWE' },
+  { type: 'yt', id: 'dgIMahX3bWE', thumb: 'hq720' },
   { type: 'vid', file: 'testi-vid-4.mp4' },
-  { type: 'yt', id: 'OxPmbUJZ1cs' },
+  { type: 'yt', id: 'OxPmbUJZ1cs', thumb: 'hq720' },
   { type: 'vid', file: 'testi-vid-5.mp4' },
   { type: 'vid', file: 'testi-vid-6.mp4' },
 ]
 
-const REEL_SIZES = '(max-width:680px) 76vw, (max-width:860px) 62vw, (max-width:1180px) 42vw, 280px'
-// מגע (טלפון/טאבלט): גלילה טבעית עם snap, כרטיס אחד בכל פעם. עכבר: קרוסלה אוטומטית + גרירה.
-const TOUCH_QUERY = '(hover:none), (pointer:coarse)'
-
-/* ───── YouTube IFrame API: נטען פעם אחת, רק כשכרטיס יוטיוב מגיע למרכז המסך ───── */
-type YTPlayer = {
-  playVideo: () => void
-  pauseVideo: () => void
-  destroy: () => void
-}
-type YTNS = {
-  Player: new (
-    el: HTMLElement,
-    opts: {
-      videoId: string
-      playerVars: Record<string, string | number>
-      events: { onReady?: (e: { target: YTPlayer }) => void; onStateChange?: (e: { data: number }) => void }
-    }
-  ) => YTPlayer
-  PlayerState: { PLAYING: number; ENDED: number; PAUSED: number }
-}
-declare global {
-  interface Window {
-    YT?: YTNS
-    onYouTubeIframeAPIReady?: () => void
-  }
-}
-let ytPromise: Promise<YTNS> | null = null
-function loadYT(): Promise<YTNS> {
-  if (ytPromise) return ytPromise
-  ytPromise = new Promise(resolve => {
-    if (window.YT?.Player) return resolve(window.YT)
-    const prev = window.onYouTubeIframeAPIReady
-    window.onYouTubeIframeAPIReady = () => {
-      prev?.()
-      resolve(window.YT as YTNS)
-    }
-    const s = document.createElement('script')
-    s.src = 'https://www.youtube.com/iframe_api'
-    s.async = true
-    document.head.appendChild(s)
-  })
-  return ytPromise
-}
+/*
+ * מצב "גלילה טבעית" (scroll-snap + סיבוב אוטומטי עדין): מגע, או מסך צר.
+ * מצב "סרט נע" (transform + גרירה עם אינרציה): עכבר על מסך רחב.
+ * ההחלטה נעשית ב-JS ונכתבת כ-class על הסטריפ, כדי שה-CSS וה-JS תמיד יסכימו (באג קודם: טאבלט רחב קפא).
+ */
+const NATIVE_QUERY = '(hover:none), (pointer:coarse), (max-width:860px)'
 
 type ReelProps = {
   id: string
@@ -77,24 +42,19 @@ type ReelProps = {
 
 /*
  * כרטיס אחד.
- * - המדיה (תמונת פתיח / metadata) נטענת רק כשהכרטיס מתקרב למסך.
- * - לחיצה אחת מנגנת: לוידאו מהאחסון קוראים play() על אותו אלמנט בתוך מחוות הלחיצה (iOS דורש את זה);
- *   ליוטיוב הנגן נוצר מראש כשהכרטיס במרכז המסך, והלחיצה קוראת playVideo() ישירות.
- * - רק כרטיס אחד מנגן בכל רגע; כרטיס שיוצא מהמסך נעצר.
+ * - המדיה נטענת רק כשהכרטיס מתקרב למסך.
+ * - וידאו מהאחסון: play() נקרא בתוך מחוות הלחיצה (iOS דורש). `#t=0.1` גורם ל-Safari לצייר פריים ראשון.
+ * - יוטיוב: בלחיצה נטען iframe עם autoplay. אין IFrame API — פחות דברים שיכולים להישבר.
+ *   אם הדפדפן חוסם autoplay, רואים את נגן היוטיוב עם כפתור ה-play שלו (תמיד נפתח).
+ * - עצירה (pause של המשתמש, סוף הסרטון, יציאה מהמסך, לחיצה מחוץ לכרטיס, כפתור ×) מחזירה את הקרוסלה לסיבוב.
  */
 function Reel({ id, item, dragDist, hidden, playing, onPlay, onStop }: ReelProps) {
   const ref = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const ytHost = useRef<HTMLDivElement>(null)
-  const player = useRef<YTPlayer | null>(null)
-  const pendingPlay = useRef(false)
   const [near, setNear] = useState(false)
-  const [focus, setFocus] = useState(false)
-  const [wanted, setWanted] = useState(false)
   const [offscreen, setOffscreen] = useState(false)
-  const [ready, setReady] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  // near: תמונת פתיח; focus: הכרטיס במרכז המסך (יוטיוב מאתחל נגן)
   useEffect(() => {
     const el = ref.current
     if (!el) return
@@ -105,57 +65,20 @@ function Reel({ id, item, dragDist, hidden, playing, onPlay, onStop }: ReelProps
           ioNear.disconnect()
         }
       },
-      { rootMargin: '0px 320px 0px 320px' }
+      { rootMargin: '200px 600px 200px 600px' }
     )
     ioNear.observe(el)
-    const ioFocus = new IntersectionObserver(
-      es =>
-        es.forEach(e => {
-          setFocus(e.isIntersecting && e.intersectionRatio >= 0.5)
-          setOffscreen(!e.isIntersecting || e.intersectionRatio < 0.2)
-        }),
-      { threshold: [0, 0.2, 0.5] }
-    )
-    ioFocus.observe(el)
+    const ioVis = new IntersectionObserver(es => es.forEach(e => setOffscreen(!e.isIntersecting || e.intersectionRatio < 0.2)), {
+      threshold: [0, 0.2],
+    })
+    ioVis.observe(el)
     return () => {
       ioNear.disconnect()
-      ioFocus.disconnect()
+      ioVis.disconnect()
     }
   }, [])
 
-  // יוטיוב: יוצרים נגן כשהכרטיס במרכז (או בלחיצה), פעם אחת
-  useEffect(() => {
-    if (item.type !== 'yt' || !(focus || wanted) || hidden || player.current || !ytHost.current) return
-    let cancelled = false
-    loadYT().then(YT => {
-      if (cancelled || !ytHost.current || player.current) return
-      // ה-API מחליף את האלמנט ב-iframe — נותנים לו ילד שאנחנו יוצרים, לא את ה-div של React
-      const mount = document.createElement('div')
-      ytHost.current.appendChild(mount)
-      player.current = new YT.Player(mount, {
-        videoId: item.id,
-        playerVars: { playsinline: 1, rel: 0, modestbranding: 1, controls: 1, origin: location.origin },
-        events: {
-          onReady: e => {
-            setReady(true)
-            if (pendingPlay.current) {
-              pendingPlay.current = false
-              e.target.playVideo()
-            }
-          },
-          onStateChange: e => {
-            if (e.data === YT.PlayerState.PLAYING) onPlay(id)
-            else if (e.data === YT.PlayerState.ENDED) onStop(id)
-          },
-        },
-      })
-    })
-    return () => {
-      cancelled = true
-    }
-  }, [focus, wanted, hidden, item, id, onPlay, onStop])
-
-  // יצא מהמסך בזמן ניגון → עוצרים
+  // יצא מהמסך בזמן ניגון → עוצרים (אלא אם במסך מלא)
   useEffect(() => {
     if (!playing || !offscreen) return
     const v = videoRef.current as (HTMLVideoElement & { webkitDisplayingFullscreen?: boolean }) | null
@@ -163,19 +86,17 @@ function Reel({ id, item, dragDist, hidden, playing, onPlay, onStop }: ReelProps
     onStop(id)
   }, [offscreen, playing, id, onStop])
 
-  // כרטיס אחר התחיל לנגן / יצא מהמסך → עוצרים כאן
+  // הפסיק לנגן (כרטיס אחר התחיל / נעצר) → משתיקים ומסתירים פקדים
   useEffect(() => {
     if (playing) return
+    setLoading(false)
     const v = videoRef.current
-    if (v && !v.paused) {
-      v.pause()
+    if (v) {
+      if (!v.paused) v.pause()
       v.muted = true
       v.controls = false
     }
-    player.current?.pauseVideo()
   }, [playing])
-
-  useEffect(() => () => player.current?.destroy(), [])
 
   const handlePlay = () => {
     if (dragDist.current > 8) return
@@ -184,79 +105,109 @@ function Reel({ id, item, dragDist, hidden, playing, onPlay, onStop }: ReelProps
       if (!v) return
       v.muted = false
       v.controls = true
-      v.play().catch(() => {})
-      onPlay(id)
-    } else {
-      if (player.current && ready) player.current.playVideo()
-      else {
-        pendingPlay.current = true
-        setWanted(true)
-      }
-      onPlay(id)
+      setLoading(v.readyState < 3)
+      v.play().catch(() => setLoading(false))
     }
+    onPlay(id)
   }
 
-  // iOS לא מצייר פריים ראשון בלי seek קטן.
-  const showFirstFrame = (e: React.SyntheticEvent<HTMLVideoElement>) => {
-    const v = e.currentTarget
-    if (v.currentTime === 0) {
-      try {
-        v.currentTime = 0.01
-      } catch {
-        /* ignore */
-      }
-    }
-  }
+  const ytThumb = item.type === 'yt' ? `https://i.ytimg.com/vi/${item.id}/${item.thumb}.jpg` : ''
 
   return (
-    <div className={`reel${playing ? ' is-playing' : ''}`} ref={ref}>
+    <div className={`reel${playing ? ' is-playing' : ''}${loading ? ' is-loading' : ''}`} ref={ref} data-reel={id}>
       {near && item.type === 'vid' && (
         <video
           ref={videoRef}
-          src={vidUrl(item.file)}
+          src={`${vidUrl(item.file)}#t=0.1`}
           muted
           playsInline
           preload="metadata"
-          onLoadedMetadata={showFirstFrame}
+          onPlaying={() => setLoading(false)}
+          onWaiting={() => playing && setLoading(true)}
+          onPause={e => {
+            const v = e.currentTarget
+            // pause של המשתמש (לא סוף, לא seek) → הקרוסלה ממשיכה; לחיצה נוספת ממשיכה מאותה נקודה
+            if (playing && !v.ended && !v.seeking) onStop(id)
+          }}
           onEnded={() => onStop(id)}
         />
       )}
-      {near && item.type === 'yt' && (
-        <>
-          <div className="yt-host" ref={ytHost} />
-          {!playing && <Image src={`https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`} alt="" fill sizes={REEL_SIZES} quality={60} />}
-        </>
+      {near && item.type === 'yt' && !playing && <img className="reel-thumb" src={ytThumb} alt="" loading="lazy" decoding="async" />}
+      {item.type === 'yt' && playing && (
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&playsinline=1&rel=0&modestbranding=1`}
+          title="עדות לקוח"
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowFullScreen
+        />
       )}
       {near && !playing && (
         <button type="button" className="reel-play" onClick={handlePlay} aria-label="הפעל וידאו" tabIndex={hidden ? -1 : 0}>
           <span className="play-ic" aria-hidden="true" />
         </button>
       )}
+      {playing && item.type === 'yt' && (
+        <button type="button" className="reel-close" onClick={() => onStop(id)} aria-label="סגור וידאו">
+          ×
+        </button>
+      )}
+      {loading && <span className="reel-spin" aria-hidden="true" />}
     </div>
   )
 }
 
 /*
  * קרוסלת עדויות הוידאו.
- * עכבר: סיבוב אוטומטי + גרירה עם אינרציה, 2 קבוצות משוכפלות ללולאה; הלולאה רצה רק כשהסקשן על המסך.
- * מגע: גלילה טבעית עם scroll-snap (CSS) — בלי JS על התנועה, הקבוצה המשוכפלת מוסתרת.
+ * סרט נע (עכבר, מסך רחב): סיבוב אוטומטי + גרירה עם אינרציה, 2 קבוצות משוכפלות ללולאה.
+ * גלילה טבעית (מגע/מסך צר): scroll-snap + מעבר אוטומטי לכרטיס הבא כל כמה שניות, שנעצר כשנוגעים.
+ * בשני המצבים: עוצר בזמן ניגון ורק כשהסקשן על המסך.
  */
 export default function Reels() {
   const sectionRef = useRef<HTMLElement>(null)
   const stripRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const dragDist = useRef(0)
+  const activeRef = useRef<string | null>(null)
   const [active, setActive] = useState<string | null>(null)
+  const [native, setNative] = useState(false)
 
-  const onPlay = useCallback((id: string) => setActive(id), [])
-  const onStop = useCallback((id: string) => setActive(cur => (cur === id ? null : cur)), [])
+  const onPlay = useCallback((id: string) => {
+    activeRef.current = id
+    setActive(id)
+  }, [])
+  const onStop = useCallback((id: string) => {
+    setActive(cur => {
+      const next = cur === id ? null : cur
+      activeRef.current = next
+      return next
+    })
+  }, [])
+
+  // לחיצה מחוץ לכרטיס שמנגן → עוצרים אותו
+  useEffect(() => {
+    if (!active) return
+    const onDown = (e: PointerEvent) => {
+      if (!(e.target as HTMLElement).closest(`[data-reel="${active}"]`)) onStop(active)
+    }
+    document.addEventListener('pointerdown', onDown)
+    return () => document.removeEventListener('pointerdown', onDown)
+  }, [active, onStop])
 
   useEffect(() => {
+    const mq = matchMedia(NATIVE_QUERY)
+    const set = () => setNative(mq.matches)
+    set()
+    mq.addEventListener('change', set)
+    return () => mq.removeEventListener('change', set)
+  }, [])
+
+  // ── מצב סרט נע ──
+  useEffect(() => {
+    if (native) return
     const section = sectionRef.current
     const strip = stripRef.current
     const track = trackRef.current
     if (!section || !strip || !track) return
-    if (matchMedia(TOUCH_QUERY).matches) return
     const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches
     let off = 0,
       gw = 0,
@@ -264,7 +215,8 @@ export default function Reels() {
       lastX = 0,
       vel = 0,
       raf = 0,
-      visible = false
+      visible = false,
+      hover = false
     const measure = () => {
       gw = track.scrollWidth / 2
     }
@@ -277,8 +229,8 @@ export default function Reels() {
         if (!gw) return
       }
       if (!drag) {
-        // בזמן ניגון הקרוסלה עוצרת, כדי שהסרטון לא יברח מהמסך
-        if (!reduced && !section.querySelector('.reel.is-playing')) off += 0.55
+        // מאט כשהעכבר מעל הקרוסלה, עוצר בזמן ניגון
+        if (!reduced && !activeRef.current) off += hover ? 0.18 : 0.6
         off += vel
         vel *= 0.94
         if (Math.abs(vel) < 0.05) vel = 0
@@ -290,14 +242,12 @@ export default function Reels() {
       if (!raf) raf = requestAnimationFrame(loop)
     }
     const onDown = (e: PointerEvent) => {
-      // לא חוטפים את הפוינטר מנגן פעיל (פקדי הוידאו/יוטיוב)
       if ((e.target as HTMLElement).closest('.reel.is-playing')) return
       drag = true
       lastX = e.clientX
       vel = 0
       dragDist.current = 0
       strip.classList.add('dragging')
-      // בלי setPointerCapture: הוא גורם ל-click להישלח ל-strip במקום לכפתור ההפעלה
       addEventListener('pointermove', onMove)
       addEventListener('pointerup', onUp)
       addEventListener('pointercancel', onUp)
@@ -317,6 +267,8 @@ export default function Reels() {
       removeEventListener('pointerup', onUp)
       removeEventListener('pointercancel', onUp)
     }
+    const enter = () => (hover = true)
+    const leave = () => (hover = false)
     const io = new IntersectionObserver(
       es => {
         visible = es.some(e => e.isIntersecting)
@@ -326,15 +278,68 @@ export default function Reels() {
     )
     io.observe(section)
     strip.addEventListener('pointerdown', onDown)
+    strip.addEventListener('mouseenter', enter)
+    strip.addEventListener('mouseleave', leave)
     addEventListener('resize', measure)
     return () => {
       io.disconnect()
       if (raf) cancelAnimationFrame(raf)
       removeEventListener('resize', measure)
       strip.removeEventListener('pointerdown', onDown)
+      strip.removeEventListener('mouseenter', enter)
+      strip.removeEventListener('mouseleave', leave)
       onUp()
+      track.style.transform = ''
     }
-  }, [])
+  }, [native])
+
+  // ── מצב גלילה טבעית: מעבר אוטומטי לכרטיס הבא ──
+  useEffect(() => {
+    if (!native) return
+    const section = sectionRef.current
+    const strip = stripRef.current
+    if (!section || !strip) return
+    if (matchMedia('(prefers-reduced-motion:reduce)').matches) return
+    let visible = false
+    let lastTouch = 0
+    const touched = () => (lastTouch = Date.now())
+    const io = new IntersectionObserver(es => (visible = es.some(e => e.isIntersecting && e.intersectionRatio > 0.45)), {
+      threshold: [0, 0.45, 0.6],
+    })
+    io.observe(strip)
+    const step = () => {
+      if (!visible || activeRef.current || document.hidden || Date.now() - lastTouch < 6000) return
+      const cards = [...strip.querySelectorAll<HTMLElement>('.reels-group:first-child .reel')]
+      if (!cards.length) return
+      const sr = strip.getBoundingClientRect()
+      const mid = sr.left + sr.width / 2
+      let cur = 0
+      let best = Infinity
+      cards.forEach((c, i) => {
+        const r = c.getBoundingClientRect()
+        const d = Math.abs(r.left + r.width / 2 - mid)
+        if (d < best) {
+          best = d
+          cur = i
+        }
+      })
+      // RTL: הכרטיס הבא נמצא משמאל. בסוף חוזרים לראשון.
+      const next = cards[(cur + 1) % cards.length]
+      const nr = next.getBoundingClientRect()
+      strip.scrollBy({ left: nr.left + nr.width / 2 - mid, behavior: 'smooth' })
+    }
+    const t = setInterval(step, 3800)
+    strip.addEventListener('touchstart', touched, { passive: true })
+    strip.addEventListener('pointerdown', touched)
+    strip.addEventListener('wheel', touched, { passive: true })
+    return () => {
+      clearInterval(t)
+      io.disconnect()
+      strip.removeEventListener('touchstart', touched)
+      strip.removeEventListener('pointerdown', touched)
+      strip.removeEventListener('wheel', touched)
+    }
+  }, [native])
 
   const group = (prefix: string, hidden?: boolean) =>
     ITEMS.map((it, i) => {
@@ -353,12 +358,14 @@ export default function Reels() {
         <h2>ככה נראית ההתחלה האחרונה.</h2>
         <p>רגעים אמיתיים מהאימונים, מהסטודיו ומהדרך. בלי פילטרים ובלי תסריט.</p>
       </div>
-      <div className="reels-strip reveal" data-d="1" id="reelsStrip" ref={stripRef}>
+      <div className={`reels-strip reveal${native ? ' native' : ''}`} data-d="1" id="reelsStrip" ref={stripRef}>
         <div className="reels-track" id="reelsTrack" ref={trackRef}>
           <div className="reels-group">{group('a')}</div>
-          <div className="reels-group" aria-hidden="true">
-            {group('b', true)}
-          </div>
+          {!native && (
+            <div className="reels-group" aria-hidden="true">
+              {group('b', true)}
+            </div>
+          )}
         </div>
       </div>
     </section>

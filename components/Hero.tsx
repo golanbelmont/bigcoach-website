@@ -6,10 +6,10 @@ export default function Hero() {
   return (
     <header id="hero">
       <div className="hero-bg">
-        <Ph img="hero.jpg" alt="" label="hero.jpg (1920×1080)" eager sizes="(max-width:860px) 178vh, 100vw" quality={60} />
+        <Ph img="hero.jpg" alt="" label="hero.jpg (1920×1080)" eager sizes="(max-width:860px) 178vh, 100vw" quality={85} />
       </div>
       <div className="hero-cut" aria-hidden="true">
-        <Ph img="golan-cut.png" alt="" label="golan-cut.png (PNG חתוך, ~900×1400)" eager sizes="(max-width:860px) 68vw, 44vw" />
+        <Ph img="golan-cut.png" alt="" label="golan-cut.png (PNG חתוך, ~900×1400)" eager sizes="(max-width:860px) 68vw, 44vw" quality={90} />
       </div>
       <div className="hero-content">
         <div className="hero-badge">
@@ -20,7 +20,7 @@ export default function Hero() {
             <Ph img="avatar-4.jpg" alt="" sizes="40px" />
           </span>
           <span>
-            <b className="red">+1,400</b> סיימו תוכנית · <b>250</b> מתאמנים פעילים עכשיו
+            <b className="red">+2,000</b> סיימו תוכנית · <i className="live-dot" aria-hidden="true" /><b>250</b> מתאמנים פעילים עכשיו
           </span>
         </div>
         <h1>

@@ -22,7 +22,7 @@ export default function About() {
             אני הבן אדם שיהיה שם <em>כשקשה.</em>
           </h2>
           <p>
-            אחרי יותר מ-1,400 מתאמנים וליווים, למדתי דבר אחד: כשיש לך מנטליות מנצחת וראש חזק, הגוף יילך אחריו לכל
+            אחרי יותר מ-2,000 מתאמנים וליווים, למדתי דבר אחד: כשיש לך מנטליות מנצחת וראש חזק, הגוף יילך אחריו לכל
             מקום שתבחר.
           </p>
           <p>
@@ -32,12 +32,12 @@ export default function About() {
           <div className="about-stats">
             <div className="stat">
               <div className="num">
-                <Cnum count={1400} />
+                <Cnum count={2000} />
                 <span>+</span>
               </div>
               <div className="lbl">סיימו את התכנית</div>
               <div className="stat-m">
-                1,400<span>+</span> סיימו
+                2,000<span>+</span> סיימו
               </div>
             </div>
             <div className="stat">

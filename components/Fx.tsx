@@ -15,6 +15,10 @@ export default function Fx() {
   // 1) כוריאוגרפיית reveal
   useEffect(() => {
     document.querySelectorAll('main h2,.final-kicker,.sec-sub,.reels-head p').forEach(h => h.classList.add('rv-h'))
+    // קו האדום מתחת לכותרת מתיישר לפי יישור הכותרת
+    document.querySelectorAll('main h2').forEach(h => {
+      if (getComputedStyle(h).textAlign === 'center') h.classList.add('h-center')
+    })
     document.querySelectorAll<HTMLElement>('.about-text p,.golan-card p').forEach((el, i) => {
       el.classList.add('rv-h')
       el.style.transitionDelay = `${0.08 + (i % 4) * 0.08}s`
@@ -31,8 +35,32 @@ export default function Fx() {
         }),
       { threshold: 0.12 }
     )
-    document.querySelectorAll('.reveal,.rv-h').forEach(el => io.observe(el))
-    return () => io.disconnect()
+    const pending = new Set(document.querySelectorAll<HTMLElement>('.reveal,.rv-h'))
+    pending.forEach(el => io.observe(el))
+    // רשת ביטחון: גלילה מהירה / קפיצה לעוגן יכולות לדלג על ה-IO — כל מה שכבר מעל תחתית המסך נחשף.
+    let t = 0
+    const sweep = () => {
+      t = 0
+      const lim = innerHeight * 0.95
+      pending.forEach(el => {
+        if (el.classList.contains('in')) return pending.delete(el)
+        if (el.getBoundingClientRect().top < lim) {
+          el.classList.add('in')
+          io.unobserve(el)
+          pending.delete(el)
+        }
+      })
+      if (!pending.size) removeEventListener('scroll', onScroll)
+    }
+    const onScroll = () => {
+      if (!t) t = window.setTimeout(sweep, 150)
+    }
+    addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      io.disconnect()
+      removeEventListener('scroll', onScroll)
+      clearTimeout(t)
+    }
   }, [])
 
   // 2) מנוע הגלילה — rAF יחיד, ערכים מוחלקים ב-lerp
