@@ -8,6 +8,7 @@ import Method from '@/components/Method'
 import Programs from '@/components/Programs'
 import Testimonials from '@/components/Testimonials'
 import Faq from '@/components/Faq'
+import ResearchTeaser from '@/components/ResearchTeaser'
 import FinalFooter from '@/components/FinalFooter'
 import LeadPopup from '@/components/LeadPopup'
 import Consent from '@/components/Consent'
@@ -44,6 +45,7 @@ export default function Home() {
         <Method />
         <Programs />
         <Testimonials />
+        <ResearchTeaser />
         <Faq />
       </main>
 

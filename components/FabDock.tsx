@@ -11,6 +11,7 @@ const LINKS = [
   ['#method', 'תכניות'],
   ['#golan', 'גולן בלמונט'],
   ['#testimonials', 'תוצאות'],
+  ['/research', 'מחקרים'],
   ['#final', 'צור קשר'],
 ] as const
 
