@@ -220,7 +220,8 @@ body.hide-cursor-fx .cursor-dot,body.hide-cursor-fx .cursor-ring{opacity:0}
 .story-line{font-family:var(--font-head);font-weight:800;font-size:clamp(2rem,4.6vw,3.9rem);line-height:1.25;color:var(--white);opacity:0;transform:translateY(60px);transition:opacity .55s cubic-bezier(.22,.7,.3,1),transform .55s cubic-bezier(.22,.7,.3,1)}
 .story-line.lit{opacity:1;transform:none}
 .story-lines{position:relative;will-change:transform}
-.story-lines .story-line.dim,.story-lines .frag.dim{opacity:.3}
+/* השורות נשלטות ישירות מה-JS לפי הגלילה (Story.tsx) — בלי transition, כדי שלא יהיה דיליי */
+.story-lines .story-line,.story-lines .frag{transition:none}
 .story-line.story-frags{opacity:1;transform:none;display:flex;justify-content:center;flex-wrap:wrap}
 .frag{display:block;white-space:nowrap;max-width:0;opacity:0;transform:translateY(50px);overflow:hidden;transition:max-width .7s cubic-bezier(.22,.7,.3,1),opacity .5s ease,transform .6s cubic-bezier(.22,.7,.3,1),margin .7s cubic-bezier(.22,.7,.3,1)}
 .frag.lit{max-width:16em;opacity:1;transform:none}

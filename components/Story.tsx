@@ -17,45 +17,50 @@ export default function Story() {
     const lines = [...story.querySelectorAll<HTMLElement>('.story-line:not(.story-frags),.frag')]
     // לכל שורה: האלמנט שלפיו ממרכזים (פרגמנט → השורה שמכילה אותו)
     const anchors = lines.map(l => (l.classList.contains('frag') ? (l.parentElement as HTMLElement) : l))
+    const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches
     let raf = 0
-    let smooth = 0
-    let ty = 0
-    let visible = false
     /*
-     * הלולאה רצה רק כשהסקשן על המסך.
-     * "טלפרומפטר": אם ערימת השורות גבוהה מהמסך (טלפונים), הערימה עולה כך שהשורה האחרונה שנדלקה
-     * תמיד באמצע המסך — אחרת "לא הפעם." נחתך מתחת למסך ונראה כאילו האנימציה נתקעה.
-     * שורות שכבר עברו מתעמעמות, כדי שהעין תלך לשורה החדשה.
+     * כל שורה צמודה ישירות למיקום הגלילה (scrub), בלי החלקה ובלי transition.
+     * באג קודם: lerp + transition גרמו לטקסט "להתמלא לבד" באיחור אחרי שהגלילה נעצרה.
+     * עכשיו: גוללים קצת → השורה עולה קצת. עוצרים → הכל עוצר באותו רגע.
+     * "האורות" נשארים: שורה שעברה מתעמעמת בהדרגה כשהבאה נדלקת.
      */
-    const tick = () => {
+    const render = () => {
       raf = 0
-      if (!visible) return
-      raf = requestAnimationFrame(tick)
       const total = story.offsetHeight - innerHeight
       const p = Math.min(1, Math.max(0, -story.getBoundingClientRect().top / Math.max(1, total)))
-      smooth += (p - smooth) * 0.22
-      if (Math.abs(p - smooth) < 0.001) smooth = p
-      // מסיימים להדליק ב-85% מהגלילה, כדי שהשורה האחרונה תספיק להישאר על המסך רגע
-      const lit = Math.min(lines.length, Math.ceil((smooth / 0.85) * lines.length))
+      // מסיימים להדליק ב-85% מהגלילה, כדי שהשורה האחרונה תישאר רגע על המסך
+      const pos = reduced ? lines.length : Math.min(lines.length, (p / 0.85) * lines.length)
+      let cur = 0
       lines.forEach((l, i) => {
-        l.classList.toggle('lit', i < lit)
-        l.classList.toggle('dim', i < lit - 1 && anchors[i] !== anchors[lit - 1])
+        const k = Math.min(1, Math.max(0, pos - i)) // 0 = כבויה, 1 = דולקת
+        if (k > 0) cur = i
+        // מתעמעמת כשהשורה הבאה (מאלמנט אחר) נדלקת
+        const nextOther = lines.findIndex((_, j) => j > i && anchors[j] !== anchors[i])
+        const dimK = nextOther < 0 ? 0 : Math.min(1, Math.max(0, pos - nextOther))
+        l.style.opacity = String(k * (1 - 0.7 * dimK))
+        l.style.transform = k < 1 ? `translate3d(0,${((1 - k) * 40).toFixed(1)}px,0)` : ''
+        if (l.classList.contains('frag')) {
+          l.style.maxWidth = k < 1 ? `${(k * 16).toFixed(2)}em` : '16em'
+          if (l.nextElementSibling) l.style.marginInlineEnd = `${(k * 0.45).toFixed(3)}em`
+        }
       })
-      const cur = anchors[Math.max(0, lit - 1)]
+      // טלפרומפטר: אם הערימה גבוהה מהמסך, מזיזים אותה כך שהשורה הנוכחית תישאר באמצע
+      const a = anchors[cur]
       const H = sticky.clientHeight
-      const center = stack.offsetTop + cur.offsetTop + cur.offsetHeight / 2
-      const target = Math.min(0, Math.max(H - (stack.offsetTop + stack.offsetHeight) - H * 0.08, H / 2 - center))
-      ty += (target - ty) * 0.14
-      if (Math.abs(target - ty) < 0.3) ty = target
+      const center = stack.offsetTop + a.offsetTop + a.offsetHeight / 2
+      const ty = Math.min(0, Math.max(H - (stack.offsetTop + stack.offsetHeight) - H * 0.08, H / 2 - center))
       stack.style.transform = ty ? `translate3d(0,${ty.toFixed(1)}px,0)` : ''
     }
-    const io = new IntersectionObserver(es => {
-      visible = es.some(e => e.isIntersecting)
-      if (visible && !raf) raf = requestAnimationFrame(tick)
-    })
-    io.observe(story)
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(render)
+    }
+    render()
+    addEventListener('scroll', onScroll, { passive: true })
+    addEventListener('resize', onScroll)
     return () => {
-      io.disconnect()
+      removeEventListener('scroll', onScroll)
+      removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
     }
   }, [])

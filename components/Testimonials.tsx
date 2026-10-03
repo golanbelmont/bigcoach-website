@@ -24,42 +24,42 @@ export default function Testimonials() {
   useEffect(() => {
     const el = sliderRef.current
     if (!el) return
-    if (matchMedia('(hover:none), (pointer:coarse)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return
-    let raf = 0
+    if (matchMedia('(prefers-reduced-motion:reduce)').matches) return
+    /*
+     * מעבר אוטומטי כרטיס אחרי כרטיס (עובד יחד עם ה-snap, במחשב ובטלפון).
+     * באג קודם: גלילה של פיקסל-פיקסל נלחמה ב-scroll-snap והסליידר נתקע, ובמגע זה היה כבוי.
+     * נעצר בהובר / מגע / גרירה, וחוזר אחרי כמה שניות בלי נגיעה.
+     */
     let visible = false
-    let paused = false
-    let dir = -1 // RTL: scrollLeft שלילי
-    let acc = 0
-    const tick = () => {
-      raf = 0
-      if (!visible) return
-      raf = requestAnimationFrame(tick)
-      if (paused) return
-      acc += 0.45
-      if (acc < 1) return
-      const step = Math.floor(acc)
-      acc -= step
-      const max = el.scrollWidth - el.clientWidth
-      const pos = Math.abs(el.scrollLeft)
-      if (pos >= max - 1) dir = 1
-      else if (pos <= 1) dir = -1
-      el.scrollLeft += dir * step
-    }
-    const start = () => {
-      if (!raf) raf = requestAnimationFrame(tick)
-    }
-    const io = new IntersectionObserver(es => {
-      visible = es.some(e => e.isIntersecting)
-      if (visible) start()
+    let hover = false
+    let lastTouch = 0
+    const touched = () => (lastTouch = Date.now())
+    const io = new IntersectionObserver(es => (visible = es.some(e => e.isIntersecting && e.intersectionRatio > 0.35)), {
+      threshold: [0, 0.35, 0.6],
     })
     io.observe(el)
-    const pause = () => (paused = true)
-    const resume = () => (paused = false)
+    const step = () => {
+      if (!visible || hover || document.hidden || Date.now() - lastTouch < 5000) return
+      const cards = [...el.querySelectorAll<HTMLElement>('.ba-card')]
+      if (cards.length < 2) return
+      const sr = el.getBoundingClientRect()
+      // RTL: הכרטיס הבא משמאל. הכרטיס "הנוכחי" = הראשון שהקצה הימני שלו בתוך הסליידר
+      const cur = cards.findIndex(c => c.getBoundingClientRect().right <= sr.right + 8)
+      const atEnd = Math.abs(el.scrollLeft) >= el.scrollWidth - el.clientWidth - 4
+      const next = atEnd || cur < 0 ? cards[0] : cards[Math.min(cur + 1, cards.length - 1)]
+      const nr = next.getBoundingClientRect()
+      el.scrollBy({ left: nr.right - sr.right, behavior: 'smooth' })
+    }
+    const t = window.setInterval(step, 3200)
+    const enter = (e: PointerEvent) => {
+      if (e.pointerType === 'mouse') hover = true
+    }
+    const leave = () => (hover = false)
     // גרירה עם עכבר (במגע הגלילה טבעית)
     let drag = false
     let lastX = 0
     const onDown = (e: PointerEvent) => {
-      paused = true
+      touched()
       if (e.pointerType !== 'mouse') return
       drag = true
       lastX = e.clientX
@@ -74,25 +74,25 @@ export default function Testimonials() {
       drag = false
       el.classList.remove('dragging')
     }
-    const leave = () => {
-      onUp()
-      resume()
-    }
-    el.addEventListener('pointerenter', pause)
+    el.addEventListener('pointerenter', enter)
     el.addEventListener('pointerleave', leave)
     el.addEventListener('pointerdown', onDown)
     el.addEventListener('pointermove', onMove)
     el.addEventListener('pointerup', onUp)
     el.addEventListener('pointercancel', onUp)
+    el.addEventListener('touchstart', touched, { passive: true })
+    el.addEventListener('wheel', touched, { passive: true })
     return () => {
+      clearInterval(t)
       io.disconnect()
-      if (raf) cancelAnimationFrame(raf)
-      el.removeEventListener('pointerenter', pause)
+      el.removeEventListener('pointerenter', enter)
       el.removeEventListener('pointerleave', leave)
       el.removeEventListener('pointerdown', onDown)
       el.removeEventListener('pointermove', onMove)
       el.removeEventListener('pointerup', onUp)
       el.removeEventListener('pointercancel', onUp)
+      el.removeEventListener('touchstart', touched)
+      el.removeEventListener('wheel', touched)
     }
   }, [])
 

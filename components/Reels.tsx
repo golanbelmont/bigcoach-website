@@ -7,20 +7,23 @@ import { vidUrl } from '@/lib/assets'
  * יוטיוב: `thumb` = איכות התמונה הכי גבוהה שקיימת לסרטון (hq720 = 1280×720, נחתך למרכז הכרטיס).
  * לסרטון בלי hq720 נשארים על hqdefault.
  */
-type Item = { type: 'yt'; id: string; thumb: 'hq720' | 'hqdefault' } | { type: 'vid'; file: string }
+type Item =
+  | { type: 'yt'; id: string; thumb: 'hq720' | 'hqdefault' }
+  | { type: 'vid'; file: string; poster?: string; name?: string }
 
-// מעורבב: אחסון / יוטיוב / אחסון / יוטיוב... (4 יוטיוב + 6 אחסון)
+/*
+ * עדויות ערוכות (2026-10): הרילסים שערכנו, דחוסים לווב (720×1280, H.264, faststart) + תמונת פתיחה.
+ * הגרסאות הגולמיות (testi-vid-1..6) והסרטונים ביוטיוב ירדו עד שיערכו. להוספת עדות: להעלות
+ * reel-<שם>.mp4 + reel-<שם>.jpg ל-assets/vid ב-Supabase ולהוסיף שורה כאן.
+ */
 const ITEMS: Item[] = [
-  { type: 'vid', file: 'testi-vid-1.mp4' },
-  { type: 'yt', id: 'VJTshfTBQIM', thumb: 'hqdefault' },
-  { type: 'vid', file: 'testi-vid-2.mp4' },
-  { type: 'yt', id: '4N_29s27YKY', thumb: 'hq720' },
-  { type: 'vid', file: 'testi-vid-3.mp4' },
-  { type: 'yt', id: 'dgIMahX3bWE', thumb: 'hq720' },
-  { type: 'vid', file: 'testi-vid-4.mp4' },
-  { type: 'yt', id: 'OxPmbUJZ1cs', thumb: 'hq720' },
-  { type: 'vid', file: 'testi-vid-5.mp4' },
-  { type: 'vid', file: 'testi-vid-6.mp4' },
+  { type: 'vid', file: 'reel-shai.mp4', poster: 'reel-shai.jpg', name: 'שי' },
+  { type: 'vid', file: 'reel-lev-f.mp4', poster: 'reel-lev-f.jpg', name: 'לב' },
+  { type: 'vid', file: 'reel-adi.mp4', poster: 'reel-adi.jpg', name: 'עדי' },
+  { type: 'vid', file: 'reel-natan.mp4', poster: 'reel-natan.jpg', name: 'נתן' },
+  { type: 'vid', file: 'reel-dan.mp4', poster: 'reel-dan.jpg', name: 'דן' },
+  { type: 'vid', file: 'reel-yasno.mp4', poster: 'reel-yasno.jpg', name: 'דניאל' },
+  { type: 'vid', file: 'reel-lev-v.mp4', poster: 'reel-lev-v.jpg', name: 'לב' },
 ]
 
 /*
@@ -119,6 +122,7 @@ function Reel({ id, item, dragDist, hidden, playing, onPlay, onStop }: ReelProps
         <video
           ref={videoRef}
           src={`${vidUrl(item.file)}#t=0.1`}
+          poster={item.poster ? vidUrl(item.poster) : undefined}
           muted
           playsInline
           preload="metadata"
