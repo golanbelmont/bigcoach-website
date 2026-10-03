@@ -753,8 +753,7 @@ html,body{max-width:100%;overflow-x:clip}
   .lead-card{padding:2.2rem 1.6rem 1.8rem;border-radius:22px}
   .lead-card h2{font-size:1.75rem}
 }
-/* reduced-motion: בהחלטת הלקוח (2026-10) האנימציות רצות גם כשהמערכת מבקשת פחות תנועה. נשאר רק להסתיר את הסמן המותאם. */
-}
+/* reduced-motion: בהחלטת הלקוח (2026-10) האנימציות רצות גם כשהמערכת מבקשת פחות תנועה. */
 
 /* ───────── REACT REBUILD: SMOOTHNESS ADDENDUM ───────── */
 /* transforms driven per-frame by the rAF engine — CSS transitions on top would double-smooth and lag */
@@ -866,4 +865,80 @@ main h2.rv-h.h-center::after{margin-inline:auto;transform-origin:center}
   .r-card{padding:1.6rem 1.4rem 1.5rem}
   .r-sec li{padding:1rem 1.05rem}
   .r-foot{margin:.8rem}
+}
+
+/* ───────── 2026-10b: ספרייה אקסקלוסיבית — שערים, מסגרת מונפשת ───────── */
+@property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+.r-card{padding:0;gap:0;background:linear-gradient(180deg,#2b2b2a,#232323);isolation:isolate;transform-style:preserve-3d}
+.r-card::before{display:none}
+/* מסגרת: גבול דק שבהובר הופך לטבעת אדומה מסתובבת */
+.r-card-frame{position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;z-index:3;
+  background:conic-gradient(from var(--ang),rgba(202,6,44,0) 0deg,rgba(202,6,44,.0) 200deg,#ff2d55 280deg,#fff 310deg,#CA062C 340deg,rgba(202,6,44,0) 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity .4s ease}
+.r-card:hover .r-card-frame,.r-card:focus-visible .r-card-frame{opacity:1;animation:frameSpin 2.6s linear infinite}
+@keyframes frameSpin{to{--ang:360deg}}
+.r-card:hover{transform:translateY(-6px);border-color:transparent;box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 40px rgba(202,6,44,.18)}
+.r-card-body{display:flex;flex-direction:column;gap:.75rem;padding:1.5rem 1.7rem 1.6rem;flex:1}
+.r-card .r-go{display:inline-flex;gap:.4rem;align-items:center}
+
+/* שער */
+.r-cover{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  background:radial-gradient(120% 90% at 85% 10%,rgba(202,6,44,.38),transparent 55%),radial-gradient(90% 80% at 10% 100%,rgba(202,6,44,.16),transparent 60%),linear-gradient(160deg,#1c1c1b,#2a2a29 60%,#181817)}
+.r-cover.is-guide{background:radial-gradient(120% 90% at 15% 10%,rgba(238,238,238,.14),transparent 55%),radial-gradient(90% 80% at 90% 100%,rgba(202,6,44,.3),transparent 60%),linear-gradient(200deg,#1c1c1b,#262625 60%,#151514)}
+.r-cover-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(238,238,238,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(238,238,238,.05) 1px,transparent 1px);background-size:28px 28px;
+  -webkit-mask-image:radial-gradient(70% 70% at 50% 50%,#000,transparent);mask-image:radial-gradient(70% 70% at 50% 50%,#000,transparent)}
+.r-cover-glow{position:absolute;left:50%;top:50%;width:46%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(202,6,44,.45),transparent 65%);filter:blur(6px);transition:transform .6s cubic-bezier(.22,.7,.3,1)}
+.r-cover-ic{position:absolute;left:50%;top:50%;width:36%;max-width:150px;transform:translate(-50%,-50%);overflow:visible;
+  stroke:#EEEEEE;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 12px rgba(202,6,44,.55));transition:transform .6s cubic-bezier(.22,.7,.3,1)}
+.r-cover-ic .thin{stroke:#CA062C;stroke-width:2.2}
+.r-cover-ic .fill{fill:rgba(202,6,44,.35);stroke:#CA062C}
+.r-cover-ic .dot{fill:#CA062C;stroke:none}
+.r-cover-num{position:absolute;bottom:.6rem;left:1rem;font-family:var(--font-head);font-weight:900;font-size:3.2rem;line-height:1;color:rgba(238,238,238,.07);letter-spacing:-.02em}
+.r-cover-chip{position:absolute;top:.9rem;right:.9rem;z-index:2;font-size:.78rem;font-weight:800;letter-spacing:.04em;padding:.32rem .75rem;border-radius:999px;background:rgba(202,6,44,.9);color:#fff}
+.r-cover.is-guide .r-cover-chip{background:rgba(238,238,238,.92);color:#232323}
+.r-cover-shine{position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.14) 50%,transparent 65%);transform:translateX(-120%);transition:transform .9s cubic-bezier(.22,.7,.3,1)}
+.r-card:hover .r-cover-ic{transform:translate(-50%,-52%) scale(1.08) rotate(-3deg)}
+.r-card:hover .r-cover-glow{transform:translate(-50%,-50%) scale(1.25)}
+.r-card:hover .r-cover-shine{transform:translateX(120%)}
+/* האייקון "נושם" לאט גם בלי הובר */
+.r-cover-ic{animation:icFloat 6s ease-in-out infinite}
+@keyframes icFloat{0%,100%{translate:0 0}50%{translate:0 -4px}}
+
+/* ספרייה */
+.r-hero-k{display:inline-block;margin-bottom:1rem;font-size:.85rem;font-weight:800;letter-spacing:.12em;color:var(--red)}
+.r-hero-stats{display:flex;justify-content:center;gap:1rem;margin-top:1.8rem;flex-wrap:wrap}
+.r-hero-stats span{padding:.55rem 1.1rem;border-radius:999px;border:1px solid var(--line);background:rgba(238,238,238,.04);font-weight:700}
+.r-hero-stats b{color:var(--red);font-family:var(--font-head);font-size:1.15em;margin-inline-end:.25rem}
+.r-shelf{padding:2rem var(--pad-x) 3.5rem;max-width:1240px;margin:0 auto}
+.r-shelf-head{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:1.4rem;border-bottom:1px solid var(--line);padding-bottom:1rem}
+.r-shelf-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem)}
+.r-shelf-head p{color:rgba(238,238,238,.6)}
+.r-shelf .r-list{padding:0;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))}
+.research-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+
+/* דף מחקר */
+.r-progress{position:fixed;top:0;right:0;left:0;height:3px;z-index:60;pointer-events:none}
+.r-progress span{display:block;height:100%;background:linear-gradient(90deg,#ff2d55,var(--red));transform-origin:right;transform:scaleX(0)}
+.r-a-cover{margin:-.5rem 0 2rem}
+.r-cover.big{aspect-ratio:21/9;border-radius:var(--radius-xl);box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.r-cover.big .r-cover-ic{width:22%;max-width:170px}
+.r-cover.big .r-cover-chip{font-size:.9rem;top:1.2rem;right:1.2rem}
+.r-gate{padding:0;margin:1rem 0 3rem;border-radius:var(--radius-xl);overflow:hidden;border:1px solid rgba(202,6,44,.35);background:linear-gradient(180deg,rgba(202,6,44,.08),rgba(35,35,35,.4))}
+.r-gate-locked{padding:1.4rem 1.6rem .4rem;position:relative}
+.r-gate-locked::after{content:'';position:absolute;inset:auto 0 0 0;height:60%;background:linear-gradient(transparent,rgba(35,35,35,.95));pointer-events:none}
+.r-gate-row{display:flex;align-items:center;gap:.9rem;padding:.85rem 0;border-bottom:1px dashed rgba(238,238,238,.12);color:rgba(238,238,238,.55);font-weight:700;filter:blur(.3px)}
+.r-gate-row span:nth-child(2){flex:1}
+.r-gate-row svg{color:var(--red);flex-shrink:0}
+.r-gate-cta{position:relative;text-align:center;padding:1.2rem 1.6rem 2rem}
+.r-gate-cta h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:.6rem}
+.r-gate-cta p{color:rgba(238,238,238,.75);margin-bottom:1.3rem;line-height:1.7}
+.r-wa-btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 1.7rem;border-radius:999px;background:#25D366;color:#0b2b16;font-weight:900;font-size:1.08rem;box-shadow:0 12px 34px rgba(37,211,102,.3);transition:transform .25s ease,box-shadow .25s ease}
+.r-wa-btn svg{width:22px;height:22px}
+.r-wa-btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(37,211,102,.42)}
+@media (max-width:860px){
+  .r-cover.big{aspect-ratio:16/9;border-radius:22px}
+  .r-cover.big .r-cover-ic{width:30%}
+  .r-card-body{padding:1.3rem 1.3rem 1.4rem}
+  .r-shelf{padding:1.5rem 1.1rem 2.5rem}
 }

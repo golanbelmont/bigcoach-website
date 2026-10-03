@@ -16,7 +16,16 @@ export type Section = {
   sources?: { label: string; url?: string }[]
 }
 
+export type CoverIcon =
+  | 'brain' | 'syringe' | 'flask' | 'glove' | 'tape' | 'protein' | 'beer' | 'clock'
+  | 'dumbbell' | 'pills' | 'calendar' | 'scale' | 'flag' | 'moon' | 'muscle' | 'shift'
+
 export type Research = {
+  /** research = מחקר מלא באתר. guide = מדריך: טיזר באתר, המדריך המלא נשלח בוואטסאפ */
+  kind?: 'research' | 'guide'
+  icon: CoverIcon
+  /** מדריכים: כותרות החלקים שיש רק במדריך המלא (מוצגים נעולים) */
+  locked?: string[]
   slug: string
   title: string
   kicker: string
@@ -31,6 +40,8 @@ export type Research = {
 
 export const RESEARCH: Research[] = [
   {
+    kind: 'research',
+    icon: 'brain',
     slug: 'cns-fatigue',
     title: 'עייפות CNS: מה זה באמת, ומה זה אומר בשבילך באימון',
     kicker: 'מחקר בשפה נגישה',
@@ -112,6 +123,8 @@ export const RESEARCH: Research[] = [
     ],
   },
   {
+    kind: 'research',
+    icon: 'syringe',
     slug: 'peptides-young-men',
     title: 'פפטידים, קצב התקדמות והמחיר שלא מופיע באינסטגרם',
     kicker: 'מחקר לגברים בגילי 20 עד 30',
@@ -267,6 +280,8 @@ export const RESEARCH: Research[] = [
     ],
   },
   {
+    kind: 'research',
+    icon: 'flask',
     slug: 'nutrition-supplements-2025-2026',
     title: 'מה חדש במדע התזונה והתוספים',
     kicker: 'סיכום מחקרים 2025 עד 2026',
@@ -389,6 +404,8 @@ export const RESEARCH: Research[] = [
     ],
   },
   {
+    kind: 'research',
+    icon: 'glove',
     slug: 'boxing-strategy-physiology',
     title: 'אגרוף קלאסי: למה מכות לגוף מכריעות קרבות, ואיך לספוג מכה',
     kicker: 'מחקר לאימוני BIG BOX',
@@ -495,4 +512,8 @@ export const RESEARCH: Research[] = [
   },
 ]
 
-export const getResearch = (slug: string) => RESEARCH.find(r => r.slug === slug)
+import { GUIDES } from './guides'
+
+/** כל הספרייה: מחקרים ואחריהם מדריכים */
+export const LIBRARY: Research[] = [...RESEARCH, ...GUIDES]
+export const getResearch = (slug: string) => LIBRARY.find(r => r.slug === slug)

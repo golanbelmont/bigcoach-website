@@ -2,11 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ResearchShell from '@/components/ResearchShell'
-import { RESEARCH, getResearch, type Block } from '@/lib/research'
+import { LIBRARY, getResearch, type Block } from '@/lib/research'
+import ResearchCover from '@/components/ResearchCover'
+import ReadProgress from '@/components/ReadProgress'
+import { WaIcon } from '@/components/icons'
 
 export const dynamicParams = false
 export function generateStaticParams() {
-  return RESEARCH.map(r => ({ slug: r.slug }))
+  return LIBRARY.map(r => ({ slug: r.slug }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -60,7 +63,11 @@ export default async function ResearchPage({ params }: { params: Promise<{ slug:
   return (
     <ResearchShell>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <article className="r-article">
+      <ReadProgress />
+      <article className={`r-article${r.kind === 'guide' ? ' is-guide' : ''}`}>
+        <div className="r-a-cover">
+          <ResearchCover icon={r.icon} kind={r.kind} big />
+        </div>
         <header className="r-a-head">
           <Link href="/research" className="r-back">
             → כל המחקרים
@@ -109,6 +116,36 @@ export default async function ResearchPage({ params }: { params: Promise<{ slug:
             )}
           </section>
         ))}
+        {r.kind === 'guide' && (
+          <section className="r-gate" aria-label="המדריך המלא">
+            <div className="r-gate-locked" aria-hidden="true">
+              {(r.locked ?? []).map((t, i) => (
+                <div key={t} className="r-gate-row">
+                  <span className="r-num">{String(r.sections.length + i + 1).padStart(2, '0')}</span>
+                  <span>{t}</span>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="5" y="11" width="14" height="10" rx="2" />
+                    <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                  </svg>
+                </div>
+              ))}
+            </div>
+            <div className="r-gate-cta">
+              <h2>רוצה את המדריך המלא?</h2>
+              <p>
+                {r.locked?.length ?? 0} חלקים נוספים, עם טבלאות, דוגמאות ומקורות. שולח לך אותו בוואטסאפ, בחינם.
+              </p>
+              <a
+                className="r-wa-btn"
+                href={`https://wa.me/972526896182?text=${encodeURIComponent(`היי גולן, הגעתי מהאתר ואשמח לקבל את המדריך: ${r.title}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <WaIcon /> שלח לי את המדריך
+              </a>
+            </div>
+          </section>
+        )}
         <p className="r-disclaimer">המידע כאן הוא סיכום של מחקרים ולא ייעוץ רפואי. לפני שינוי בתוספים או בתרופות, תדבר עם הרופא שלך.</p>
       </article>
     </ResearchShell>

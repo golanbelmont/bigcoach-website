@@ -1,35 +1,27 @@
 import Link from 'next/link'
+import ResearchCard from './ResearchCard'
 import { RESEARCH } from '@/lib/research'
+import { GUIDES } from '@/lib/guides'
 
-/* טיזר בדף הבית: המחקר האחרון + כניסה למדור */
+/* טיזר בדף הבית: שני מחקרים + מדריך אחד, וכניסה לספרייה */
 export default function ResearchTeaser() {
-  const latest = RESEARCH.slice(0, 3)
+  const pick = [RESEARCH[1], RESEARCH[0], GUIDES[0]].filter(Boolean)
   return (
     <section id="research">
       <div className="research-head reveal">
         <h2>אני קורא את המחקרים. אתה מקבל את השורה התחתונה.</h2>
-        <p className="sec-sub">סיכומים שלי על מה שחדש בתזונה, באימונים ובתוספים. בשפה פשוטה, עם מקורות.</p>
+        <p className="sec-sub">
+          {RESEARCH.length} מחקרים ו{GUIDES.length} מדריכים על תזונה, אימונים ותוספים. בשפה פשוטה, עם מקורות.
+        </p>
       </div>
       <div className="research-grid reveal" data-d="1">
-        {latest.map(r => (
-          <Link key={r.slug} href={`/research/${r.slug}`} className="r-card">
-            <span className="r-card-k">{r.kicker}</span>
-            <h3>{r.title}</h3>
-            <p>{r.summary}</p>
-            <span className="r-tags">
-              {r.tags.map(t => (
-                <span key={t}>{t}</span>
-              ))}
-            </span>
-            <span className="r-go" aria-hidden="true">
-              לקריאה ←
-            </span>
-          </Link>
+        {pick.map(r => (
+          <ResearchCard key={r.slug} r={r} h="h3" />
         ))}
       </div>
       <div className="research-more reveal" data-d="2">
         <Link href="/research" className="u-link">
-          לכל המחקרים
+          לכל הספרייה
         </Link>
       </div>
     </section>
