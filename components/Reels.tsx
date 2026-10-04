@@ -17,6 +17,7 @@ type Item =
  * reel-<שם>.mp4 + reel-<שם>.jpg ל-assets/vid ב-Supabase ולהוסיף שורה כאן.
  */
 const ITEMS: Item[] = [
+  { type: 'vid', file: 'reel-liel.mp4', poster: 'reel-liel.jpg', name: 'ליאל' },
   { type: 'vid', file: 'reel-shai.mp4', poster: 'reel-shai.jpg', name: 'שי' },
   { type: 'vid', file: 'reel-lev-f.mp4', poster: 'reel-lev-f.jpg', name: 'לב' },
   { type: 'vid', file: 'reel-adi.mp4', poster: 'reel-adi.jpg', name: 'עדי' },
