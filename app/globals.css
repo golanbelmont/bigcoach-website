@@ -1004,3 +1004,4 @@ main h2.rv-h.h-center::after{margin-inline:auto;transform-origin:center}
   .ft-bottom{flex-direction:column;align-items:center;text-align:center;gap:.9rem}
   .ft-word{font-size:13.2vw;padding-bottom:6.5rem}
 }
+.ft-contact a:hover .ft-ic.yt{background:#FF0000;border-color:#FF0000}

@@ -4,6 +4,7 @@ import { WA_GENERAL } from '@/lib/links'
 
 const IG = 'https://www.instagram.com/_big_coach_/'
 const TT = 'https://www.tiktok.com/@big.coach.golan.boublil'
+const YT = 'https://www.youtube.com/@BigCoachAcademy'
 const FB = 'https://www.facebook.com/golan.boublil/'
 const MAPS = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('ביאליק 137, באר שבע')
 
@@ -37,6 +38,12 @@ const IcTt = () => (
       className="fill"
       d="M11 1.5c.3 1.9 1.6 3.3 3.4 3.5v2.5c-1.3 0-2.4-.4-3.4-1v4.3a4.2 4.2 0 1 1-4.2-4.2c.2 0 .5 0 .7.1v2.6a1.6 1.6 0 1 0 1.1 1.5V1.5h2.4z"
     />
+  </svg>
+)
+const IcYt = () => (
+  <svg viewBox="0 0 16 16">
+    <rect x="1.5" y="3.4" width="13" height="9.2" rx="2.8" />
+    <path className="fill" d="M6.6 5.9v4.2L10.2 8z" />
   </svg>
 )
 const IcFb = () => (
@@ -167,6 +174,17 @@ export default function FinalFooter() {
                     </span>
                   </a>
                 </li>
+                <li>
+                  <a href={YT} target="_blank">
+                    <span className="ft-ic yt">
+                      <IcYt />
+                    </span>
+                    <span className="ft-txt">
+                      <small>יוטיוב</small>
+                      <b dir="ltr">@BigCoachAcademy</b>
+                    </span>
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -205,6 +223,9 @@ export default function FinalFooter() {
                 </a>
                 <a href={TT} target="_blank" aria-label="טיקטוק">
                   <IcTt />
+                </a>
+                <a href={YT} target="_blank" aria-label="יוטיוב">
+                  <IcYt />
                 </a>
                 <a href={FB} target="_blank" aria-label="פייסבוק">
                   <IcFb />
