@@ -182,7 +182,7 @@ const PROGS: Prog[] = [
       </>
     ),
     cap: 'מגיעים לגיבוש מוכנים. בגוף ובראש.',
-    img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flickr_-_Israel_Defense_Forces_-_Saluting_the_Flag.jpg/2560px-Flickr_-_Israel_Defense_Forces_-_Saluting_the_Flag.jpg',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flickr_-_Israel_Defense_Forces_-_Saluting_the_Flag.jpg/1920px-Flickr_-_Israel_Defense_Forces_-_Saluting_the_Flag.jpg',
     imgLabel: 'prog-combat.jpg (1920×1080)',
     detailTitle: (
       <>

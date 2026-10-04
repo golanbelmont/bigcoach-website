@@ -62,6 +62,7 @@ export default function Ph({
           sizes={sizes}
           quality={quality}
           priority={eager}
+          unoptimized={/^https?:/.test(img)}
           loading={eager ? 'eager' : 'lazy'}
           style={style}
           onLoad={() => setState('ok')}
