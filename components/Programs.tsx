@@ -232,7 +232,7 @@ function StageUI({ prog, open, onToggle }: { prog: Prog; open: boolean; onToggle
             <h3>{prog.detailTitle}</h3>
             <div className="sub">{prog.detailSub}</div>
           </div>
-          <Ph img={prog.thumb} alt="" label={prog.thumbLabel} sizes="215px" />
+          <Ph img={prog.img} alt="" label={prog.thumbLabel} sizes="215px" />
         </div>
         <p>{prog.text}</p>
         <div className="pd-fit">
