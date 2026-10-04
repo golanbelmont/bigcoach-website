@@ -4,6 +4,7 @@
 
 > **עדכון 2026-10 (חשוב, גובר על מה שכתוב למטה):** הקוד החי הוא אפליקציית **Next.js** (`app/`, `components/`, `lib/`), לא `site/index.html` (שנשאר כארכיון). חוקי האימות של div/JS למטה מתייחסים לגרסה הישנה; היום מאמתים עם `npx tsc --noEmit` ו-`next build`.
 > - פריסה: Vercel של Big Coach (team `big-coach`, פרויקט `bigcoach-website`). branch ה-production הוא `coachv1`; דוחפים ל-`main` ול-`coachv1` יחד.
+> - דומיין: `www.bigcoach.co.il` מחובר ומאומת ב-Vercel (2026-10-04), `bigcoach.co.il` מפנה אליו ב-308. DNS ב-MyNames. פוטר: כולל יוטיוב `@BigCoachAcademy`.
 > - מספר שסיימו תוכנית: **2,000** (הירו + about). פעילים: 250.
 > - עדויות הוידאו (`components/Reels.tsx`): יוטיוב נפתח כ-iframe רגיל עם autoplay (בלי IFrame API). מצב גלילה טבעית/סרט נע נקבע ב-JS (class `native`). במגע: מעבר אוטומטי לכרטיס הבא.
 > - Story: כל שורה צמודה ישירות לגלילה (scrub, בלי lerp ובלי transition, הלקוח לא רוצה דיליי); טלפרומפטר שמרכז את השורה הנוכחית; שורות שעברו מתעמעמות ("האורות", הלקוח אוהב).
