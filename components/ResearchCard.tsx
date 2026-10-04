@@ -8,7 +8,7 @@ export default function ResearchCard({ r, index, h = 'h2' }: { r: Research; inde
   return (
     <Link href={`/research/${r.slug}`} className={`r-card${r.kind === 'guide' ? ' is-guide' : ''}`}>
       <span className="r-card-frame" aria-hidden="true" />
-      <ResearchCover icon={r.icon} kind={r.kind} index={index} />
+      <ResearchCover icon={r.icon} kind={r.kind} index={index} slug={r.slug} title={r.title} />
       <span className="r-card-body">
         <span className="r-card-k">{r.kicker}</span>
         <H>{r.title}</H>

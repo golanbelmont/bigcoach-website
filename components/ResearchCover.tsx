@@ -1,4 +1,17 @@
+import Image from 'next/image'
 import type { CoverIcon } from '@/lib/research'
+import { imgUrl } from '@/lib/assets'
+
+/*
+ * 2026-10: שערים מעוצבים בסגנון הקרוסלות של ביג קואוץ׳ (Canva, עיצוב "Big Coach – שערים למחקרים ומדריכים באתר").
+ * הקבצים ב-Supabase: assets/img/research-<slug>.jpg (800×1000). אם אין קובץ לסלאג, נופלים לאייקון ה-SVG.
+ */
+const DESIGNED = new Set([
+  'cns-fatigue', 'peptides-young-men', 'nutrition-supplements-2025-2026', 'boxing-strategy-physiology',
+  'lose-belly-fat', 'protein-made-simple', 'lose-weight-still-go-out', 'intermittent-fasting',
+  'cardio-or-strength', 'supplements-worth-it', 'beginner-3-days', 'the-scale-lies',
+  'keep-the-results', 'night-snacking', 'clean-bulk', 'shift-work-eating',
+])
 
 /*
  * תמונת שער לכל מחקר / מדריך: אייקון נושא גדול בקו אדום־לבן על רקע כהה עם זוהר,
@@ -126,12 +139,30 @@ export default function ResearchCover({
   kind = 'research',
   index,
   big = false,
+  slug,
+  title,
 }: {
   icon: CoverIcon
   kind?: 'research' | 'guide'
   index?: number
   big?: boolean
+  slug?: string
+  title?: string
 }) {
+  if (slug && DESIGNED.has(slug)) {
+    return (
+      <div className={`r-cover has-img${big ? ' big' : ''}${kind === 'guide' ? ' is-guide' : ''}`}>
+        <Image
+          src={imgUrl(`research-${slug}.jpg`)}
+          alt={title ? `שער: ${title}` : ''}
+          fill
+          sizes={big ? '(max-width:860px) 90vw, 440px' : '(max-width:860px) 92vw, 400px'}
+          priority={big}
+        />
+        <span className="r-cover-shine" aria-hidden="true" />
+      </div>
+    )
+  }
   return (
     <div className={`r-cover${big ? ' big' : ''}${kind === 'guide' ? ' is-guide' : ''}`} aria-hidden="true">
       <span className="r-cover-grid" />

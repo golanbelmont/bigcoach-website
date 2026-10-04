@@ -942,3 +942,10 @@ main h2.rv-h.h-center::after{margin-inline:auto;transform-origin:center}
   .r-card-body{padding:1.3rem 1.3rem 1.4rem}
   .r-shelf{padding:1.5rem 1.1rem 2.5rem}
 }
+
+/* 2026-10c: שערים מעוצבים (תמונה 4:5 בסגנון הקרוסלות) */
+.r-cover.has-img{aspect-ratio:4/5;background:#111}
+.r-cover.has-img img{object-fit:cover;transition:transform .8s cubic-bezier(.22,.7,.3,1)}
+.r-card:hover .r-cover.has-img img{transform:scale(1.04)}
+.r-cover.has-img.big{aspect-ratio:4/5;max-width:440px;margin-inline:auto}
+@media (max-width:860px){.r-cover.has-img.big{aspect-ratio:4/5;max-width:min(100%,420px)}}

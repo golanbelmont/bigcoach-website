@@ -66,7 +66,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ slug:
       <ReadProgress />
       <article className={`r-article${r.kind === 'guide' ? ' is-guide' : ''}`}>
         <div className="r-a-cover">
-          <ResearchCover icon={r.icon} kind={r.kind} big />
+          <ResearchCover icon={r.icon} kind={r.kind} big slug={r.slug} title={r.title} />
         </div>
         <header className="r-a-head">
           <Link href="/research" className="r-back">
