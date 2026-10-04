@@ -211,24 +211,23 @@ body.hide-cursor-fx .cursor-dot,body.hide-cursor-fx .cursor-ring{opacity:0}
 /* ───────── STORY ───────── */
 #story{background:var(--black);padding:0;position:relative}
 .story-sticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.story-spacer{height:300vh}
+.story-spacer{height:190vh}
 .story-lines{display:flex;flex-direction:column;align-items:center;gap:1.2rem;text-align:center;padding:0 1.4rem}
-.story-line{font-family:var(--font-head);font-weight:800;font-size:clamp(2rem,4.6vw,3.9rem);line-height:1.25;color:var(--white);opacity:0;transform:translateY(60px);transition:opacity .55s cubic-bezier(.22,.7,.3,1),transform .55s cubic-bezier(.22,.7,.3,1)}
+.story-line{font-family:var(--font-head);font-weight:800;font-size:clamp(2rem,4.6vw,3.9rem);line-height:1.25;color:var(--white);opacity:0;transform:translateY(14px)}
 .story-line.lit{opacity:1;transform:none}
 .story-lines{position:relative;will-change:transform}
 /* השורות נשלטות ישירות מה-JS לפי הגלילה (Story.tsx) — בלי transition, כדי שלא יהיה דיליי */
 .story-lines .story-line,.story-lines .frag{transition:none}
-.story-line.story-frags{opacity:1;transform:none;display:flex;justify-content:center;flex-wrap:wrap}
-.frag{display:block;white-space:nowrap;max-width:0;opacity:0;transform:translateY(50px);overflow:hidden;transition:max-width .7s cubic-bezier(.22,.7,.3,1),opacity .5s ease,transform .6s cubic-bezier(.22,.7,.3,1),margin .7s cubic-bezier(.22,.7,.3,1)}
-.frag.lit{max-width:16em;opacity:1;transform:none}
-.frag.lit:not(:last-child){margin-inline-end:.45em}
+.story-line.story-frags{opacity:1;transform:none;display:flex;justify-content:center;flex-wrap:wrap;row-gap:.2em}
+.frag{display:inline-block;white-space:nowrap;line-height:1.25;opacity:0;transform:translateY(14px)}
+.frag:not(:last-child){margin-inline-end:.45em}
 .story-line.final{color:var(--red);font-weight:900;font-size:clamp(3rem,7vw,6rem);margin-top:1.6rem}
 
 /* ───────── CUSTOM CURSOR ───────── */
 .cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;background:var(--red);z-index:900;pointer-events:none;transform:translate(-50%,-50%)}
 .cursor-ring{position:fixed;top:0;left:0;width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(202,6,44,.55);z-index:900;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s ease,height .25s ease,border-color .25s ease}
 .cursor-ring.on{width:64px;height:64px;border-color:var(--red)}
-@media (max-width:860px){.story-spacer{height:240vh}.story-lines{gap:.85rem}.story-line{font-size:clamp(1.55rem,7.2vw,2.2rem)}.story-line.final{font-size:clamp(2.6rem,12vw,3.6rem);margin-top:.9rem}}
+@media (max-width:860px){.story-spacer{height:150vh}.story-lines{gap:.85rem}.story-line{font-size:clamp(1.55rem,7.2vw,2.2rem)}.story-line.final{font-size:clamp(2.6rem,12vw,3.6rem);margin-top:.9rem}}
 
 /* ───────── SCROLL CHOREOGRAPHY ───────── */
 /* בלי blur: פילטר מונפש נתקע לפעמים ב-Safari (טקסט נשאר מטושטש) ומכביד בטלפונים */
@@ -518,7 +517,7 @@ html,body{max-width:100%;overflow-x:clip}
   .hero-sub{font-size:1.08rem;max-width:540px;margin-bottom:2rem}
   .hero-cut{width:min(42vw,500px);height:82%;left:.5rem}
   .hero-badge{font-size:.95rem;margin-bottom:1.4rem}
-  .story-spacer{height:260vh}
+  .story-spacer{height:180vh}
   #reels{padding-right:var(--pad-x);padding-left:var(--pad-x)}
   .reel{flex-basis:clamp(300px,42vw,430px)}
   .about-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
@@ -642,7 +641,7 @@ html,body{max-width:100%;overflow-x:clip}
   .method-head{margin-bottom:2.5rem}
   .method-grid{grid-template-columns:1fr;width:100%;max-width:720px;margin-inline:auto}
   .mcard{padding:2.2rem 1.8rem 2rem}
-  .story-spacer{height:210vh}
+  .story-spacer{height:140vh}
 
   /* testimonials mobile */
   #testimonials{margin:.8rem}
@@ -717,7 +716,7 @@ html,body{max-width:100%;overflow-x:clip}
   .hero-cta-row .btn-light{max-width:100%}
   .hero-note{font-size:.86rem}
   .menu-link{font-size:clamp(2rem,11vw,3.4rem)}
-  .story-spacer{height:180vh}
+  .story-spacer{height:130vh}
   .reel{flex-basis:min(76vw,330px)}
   #about,#method{padding-right:1.1rem;padding-left:1.1rem}
   .about-text{padding:1.5rem .8rem}

@@ -25,31 +25,42 @@ export default function Story() {
      * עכשיו: גוללים קצת → השורה עולה קצת. עוצרים → הכל עוצר באותו רגע.
      * "האורות" נשארים: שורה שעברה מתעמעמת בהדרגה כשהבאה נדלקת.
      */
+    /*
+     * 2026-10 (הלקוח: "עולה בדיליי ומכוער"):
+     * - ההדלקה מתחילה כבר כשהסקשן נכנס למסך (לא רק כשהוא מגיע לראש) — אין יותר מסך שחור ריק.
+     * - כל שורה נדלקת בקטע גלילה קצר עם easing, אז היא "קופצת" נקי במקום להיות חצי-שקופה לאורך זמן.
+     * - הפריסה קבועה: הפרגמנטים לא מתרחבים (בלי max-width), שורות זזות רק 14px — אין חפיפה ואין ריצוד.
+     * - הערימה זזה (טלפרומפטר) רק אם היא באמת גבוהה מהמסך.
+     */
+    const ease = (t: number) => t * t * (3 - 2 * t)
+    const clamp = (t: number) => Math.min(1, Math.max(0, t))
     const render = () => {
       raf = 0
-      const total = story.offsetHeight - innerHeight
-      const p = Math.min(1, Math.max(0, -story.getBoundingClientRect().top / Math.max(1, total)))
-      // מסיימים להדליק ב-85% מהגלילה, כדי שהשורה האחרונה תישאר רגע על המסך
-      const pos = reduced ? lines.length : Math.min(lines.length, (p / 0.85) * lines.length)
+      const r = story.getBoundingClientRect()
+      const vh = innerHeight
+      // התחלה: ראש הסקשן ב-55% מגובה המסך. סוף: 85% מהדרך עד שהסקשן משתחרר
+      const start = vh * 0.55
+      const end = -(story.offsetHeight - vh) * 0.85
+      const p = clamp((start - r.top) / Math.max(1, start - end))
+      const pos = reduced ? lines.length : p * lines.length
       let cur = 0
       lines.forEach((l, i) => {
-        const k = Math.min(1, Math.max(0, pos - i)) // 0 = כבויה, 1 = דולקת
+        const k = ease(clamp((pos - i) / 0.55)) // 0 = כבויה, 1 = דולקת
         if (k > 0) cur = i
         // מתעמעמת כשהשורה הבאה (מאלמנט אחר) נדלקת
         const nextOther = lines.findIndex((_, j) => j > i && anchors[j] !== anchors[i])
-        const dimK = nextOther < 0 ? 0 : Math.min(1, Math.max(0, pos - nextOther))
-        l.style.opacity = String(k * (1 - 0.7 * dimK))
-        l.style.transform = k < 1 ? `translate3d(0,${((1 - k) * 40).toFixed(1)}px,0)` : ''
-        if (l.classList.contains('frag')) {
-          l.style.maxWidth = k < 1 ? `${(k * 16).toFixed(2)}em` : '16em'
-          if (l.nextElementSibling) l.style.marginInlineEnd = `${(k * 0.45).toFixed(3)}em`
-        }
+        const dimK = nextOther < 0 ? 0 : ease(clamp((pos - nextOther) / 0.55))
+        l.style.opacity = String(k * (1 - 0.65 * dimK))
+        l.style.transform = k < 1 ? `translate3d(0,${((1 - k) * 14).toFixed(1)}px,0)` : ''
       })
-      // טלפרומפטר: אם הערימה גבוהה מהמסך, מזיזים אותה כך שהשורה הנוכחית תישאר באמצע
-      const a = anchors[cur]
+      // טלפרומפטר: רק אם הערימה גבוהה מהמסך — אחרת היא נשארת במקום, ממורכזת
       const H = sticky.clientHeight
-      const center = stack.offsetTop + a.offsetTop + a.offsetHeight / 2
-      const ty = Math.min(0, Math.max(H - (stack.offsetTop + stack.offsetHeight) - H * 0.08, H / 2 - center))
+      let ty = 0
+      if (stack.offsetHeight > H * 0.9) {
+        const a = anchors[cur]
+        const center = stack.offsetTop + a.offsetTop + a.offsetHeight / 2
+        ty = Math.min(0, Math.max(H - (stack.offsetTop + stack.offsetHeight) - H * 0.06, H / 2 - center))
+      }
       stack.style.transform = ty ? `translate3d(0,${ty.toFixed(1)}px,0)` : ''
     }
     const onScroll = () => {
