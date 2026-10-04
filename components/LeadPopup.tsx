@@ -147,7 +147,7 @@ export default function LeadPopup() {
                   <option value="עלייה במסה">עלייה במסה</option>
                   <option value="שיפור כוח וביצועים">שיפור כוח וביצועים</option>
                   <option value="תזונה ובריאות כללית">תזונה ובריאות כללית</option>
-                  <option value="מנטליות ומוטיבציה">מנטליות ומוטיבציה</option>
+                  <option value="הכנה לקרבי ויחידות מיוחדות">הכנה לקרבי ויחידות מיוחדות</option>
                   <option value="אחר">אחר</option>
                 </select>
               </div>

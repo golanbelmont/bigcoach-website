@@ -8,4 +8,4 @@ export const WA_ONLINE = enc('היי גולן, הגעתי מהאתר ואני מ
 export const WA_GROUP = enc('היי גולן, הגעתי מהאתר ואני מתעניין בליווי עם אימוני הקבוצה.')
 export const WA_PERSONAL = enc('היי גולן, הגעתי מהאתר ואני מתעניין במסלול הפרימיום עם אימונים אישיים.')
 export const WA_BOXING = enc('היי גולן, הגעתי מהאתר ואני מתעניין בשיעורי האגרוף BIG BOX.')
-export const WA_MENTAL = enc('היי גולן, הגעתי מהאתר ואני מתעניין בליווי המנטלי.')
+export const WA_COMBAT = enc('היי גולן, הגעתי מהאתר ואני מתעניין בהכנה לקרבי ויחידות מיוחדות.')

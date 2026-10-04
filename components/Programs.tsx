@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import Ph from './Ph'
 import { Arrow, Mask } from './icons'
-import { WA_ONLINE, WA_GROUP, WA_PERSONAL, WA_BOXING, WA_MENTAL } from '@/lib/links'
+import { WA_ONLINE, WA_GROUP, WA_PERSONAL, WA_BOXING, WA_COMBAT } from '@/lib/links'
 
 type Prog = {
   key: string
@@ -170,34 +170,41 @@ const PROGS: Prog[] = [
     wa: WA_BOXING,
   },
   {
-    key: 'mental',
-    name: 'ליווי מנטלי',
-    title: 'ליווי מנטלי',
-    cap: 'העבודה הפנימית שמחזיקה את הכל.',
-    img: 'prog-mental.jpg',
-    imgLabel: 'prog-mental.jpg (1920×1080)',
-    detailTitle: (
+    key: 'combat',
+    name: 'הכנה לקרבי ויחידות מיוחדות',
+    title: (
       <>
-        ליווי
+        הכנה לקרבי
         <br />
-        מנטלי
+        ויחידות מיוחדות
       </>
     ),
-    detailSub: 'כדי לבנות אימפריה צריך קודם מנטליות ברזל.',
+    cap: 'מגיעים לגיבוש מוכנים. בגוף ובראש.',
+    img: 'prog-mental.jpg',
+    imgLabel: 'prog-combat.jpg (1920×1080)',
+    detailTitle: (
+      <>
+        הכנה
+        <br />
+        לקרבי
+      </>
+    ),
+    detailSub: 'גיבושים | יחידות מיוחדות | שירות קרבי.',
     thumb: 'prog-mental-thumb.jpg',
-    thumbLabel: 'prog-mental-thumb.jpg',
+    thumbLabel: 'prog-combat-thumb.jpg',
     text: (
       <>
-        עבודה פנימית מובנית למסלול ברזל. פגישה שבועית 1:1 בה נבנה מערך עבודה הכולל חומרי קריאה, שיחות, בניית
-        ביטחון והרגלים שיחזיקו לחיים שלמים אחרי שהליווי נגמר. החלק שאף אחד אחר לא נותן לך.
+        מסלול ייעודי למי שמכוון לשירות קרבי, לגיבוש או ליחידה מיוחדת. אימונים שבונים כושר, כוח וסיבולת
+        לדרישות האמיתיות, תזונה שמחזיקה את העומס, ועבודה על הראש לרגעים שבהם הגוף רוצה להפסיק. מלווה אותך
+        מי שהיה ראש מדור קרב מגע של חטיבת גולני.
       </>
     ),
     rows: [
-      { k: 'אורך התכנית', v: 'החל מ-6 שבועות' },
-      { k: 'מטרה', v: 'לבנות משמעת ברזל' },
-      { k: 'עלות לתכנית', v: '1,800 ש"ח' },
+      { k: 'למי זה מתאים', v: 'מלש"בים לפני גיבוש ושירות קרבי' },
+      { k: 'מלווה', v: 'ראש מדור קרב מגע לשעבר, גולני' },
+      { k: 'עלות', v: '₪[מחיר]' },
     ],
-    wa: WA_MENTAL,
+    wa: WA_COMBAT,
   },
 ]
 
