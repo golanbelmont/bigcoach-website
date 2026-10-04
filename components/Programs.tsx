@@ -18,6 +18,7 @@ type Prog = {
   thumbLabel: string
   text: ReactNode
   fit: string
+  credit?: string
   rows: { k: string; v: ReactNode }[]
   wa: string
 }
@@ -181,7 +182,7 @@ const PROGS: Prog[] = [
       </>
     ),
     cap: 'מגיעים לגיבוש מוכנים. בגוף ובראש.',
-    img: 'prog-mental.jpg',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flickr_-_Israel_Defense_Forces_-_Saluting_the_Flag.jpg/2560px-Flickr_-_Israel_Defense_Forces_-_Saluting_the_Flag.jpg',
     imgLabel: 'prog-combat.jpg (1920×1080)',
     detailTitle: (
       <>
@@ -205,6 +206,7 @@ const PROGS: Prog[] = [
       { k: 'מלווה', v: 'ראש מדור קרב מגע לשעבר, גולני' },
     ],
     fit: 'מלש"בים לפני גיבוש, שירות קרבי או יחידה מיוחדת.',
+    credit: 'צילום: דובר צה"ל, Israel Defense Forces, CC BY 2.0',
     wa: WA_COMBAT,
   },
 ]
@@ -247,6 +249,7 @@ function StageUI({ prog, open, onToggle }: { prog: Prog; open: boolean; onToggle
             </div>
           ))}
         </div>
+        {prog.credit && <small className="pd-credit">{prog.credit}</small>}
         <a href={prog.wa} target="_blank" className="btn btn-light">
           קבע שיחת היכרות
           <span className="circle">
