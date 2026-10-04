@@ -17,6 +17,7 @@ type Prog = {
   thumb: string
   thumbLabel: string
   text: ReactNode
+  fit: string
   rows: { k: string; v: ReactNode }[]
   wa: string
 }
@@ -52,6 +53,7 @@ const PROGS: Prog[] = [
       { k: 'תקשורת', v: 'רציפה ישירות איתי' },
       { k: 'עלות חודשית', v: 'החל מ-690 ש"ח' },
     ],
+    fit: 'מי שרוצה ליווי מלא ותוצאה אמיתית מכל מקום בארץ, בלי להגיע לסטודיו.',
     wa: WA_ONLINE,
   },
   {
@@ -88,6 +90,7 @@ const PROGS: Prog[] = [
       { k: 'כולל', v: 'אימונים + תפריט + מעקב צמוד' },
       { k: 'עלות חודשית', v: 'החל מ-990 ש"ח' },
     ],
+    fit: 'מי שבאזור באר שבע ורוצה מסגרת קבועה, אנרגיה של קבוצה ומאמן לידו באימון.',
     wa: WA_GROUP,
   },
   {
@@ -131,6 +134,7 @@ const PROGS: Prog[] = [
       },
       { k: 'עלות חודשית', v: 'החל מ-990 ש"ח' },
     ],
+    fit: 'מי שרוצה את הדרך הכי מהירה לתוצאה ויחס אישי מלא, גם באימונים עצמם.',
     wa: WA_PERSONAL,
   },
   {
@@ -165,8 +169,8 @@ const PROGS: Prog[] = [
     rows: [
       { k: 'רמה', v: 'מתחילים עד מתקדמים' },
       { k: 'מיקום', v: 'ח"נ ביאליק 137, באר שבע' },
-      { k: 'עלות חודשית', v: '₪[מחיר] / חודש' },
     ],
+    fit: 'כל מי שרוצה כושר, ביטחון ופורקן. גם בלי שום ניסיון קודם.',
     wa: WA_BOXING,
   },
   {
@@ -200,10 +204,10 @@ const PROGS: Prog[] = [
       </>
     ),
     rows: [
-      { k: 'למי זה מתאים', v: 'מלש"בים לפני גיבוש ושירות קרבי' },
+      { k: 'עובדים על', v: 'כושר קרבי, כוח, סיבולת וראש' },
       { k: 'מלווה', v: 'ראש מדור קרב מגע לשעבר, גולני' },
-      { k: 'עלות', v: '₪[מחיר]' },
     ],
+    fit: 'מלש"בים לפני גיבוש, שירות קרבי או יחידה מיוחדת.',
     wa: WA_COMBAT,
   },
 ]
@@ -234,6 +238,10 @@ function StageUI({ prog, open, onToggle }: { prog: Prog; open: boolean; onToggle
           <Ph img={prog.thumb} alt="" label={prog.thumbLabel} sizes="215px" />
         </div>
         <p>{prog.text}</p>
+        <div className="pd-fit">
+          <span>למי זה מתאים</span>
+          <b>{prog.fit}</b>
+        </div>
         <div className="pd-rows">
           {prog.rows.map(r => (
             <div className="srow" key={r.k}>

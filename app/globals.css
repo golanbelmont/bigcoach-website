@@ -1005,3 +1005,11 @@ main h2.rv-h.h-center::after{margin-inline:auto;transform-origin:center}
   .ft-word{font-size:13.2vw;padding-bottom:6.5rem}
 }
 .ft-contact a:hover .ft-ic.yt{background:#FF0000;border-color:#FF0000}
+.pd-fit{display:flex;flex-direction:column;gap:.3rem;padding:.9rem 1.1rem;margin-bottom:1.6rem;border-radius:14px;background:rgba(202,6,44,.1);border-right:3px solid var(--red)}
+.pd-fit span{font-size:.8rem;font-weight:700;color:var(--red);letter-spacing:.02em}
+.pd-fit b{font-size:1.02rem;font-weight:600;color:var(--white);line-height:1.55}
+@media (max-width:1024px), (pointer:coarse){[data-prog].open .pd-fit{flex:0 0 auto;margin-bottom:1.2rem}}
+@media (max-width:1024px), (pointer:coarse){
+  .prog-stage[data-prog].open .stage-ui,[data-prog].open .stage-ui{position:relative!important;inset:auto;flex:1;width:100%}
+  [data-prog].open .prog-detail{overflow:visible}
+}
