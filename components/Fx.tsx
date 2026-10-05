@@ -249,4 +249,34 @@ export default function Fx() {
   }, [])
 
   return null
+
+  // 4) מעקב קליקים לוואטסאפ: על איזה מסלול לחצו ומאיפה באתר (בלי פרטים אישיים) → גיליון הלידים
+  useEffect(() => {
+    const PLACES: Record<string, string> = {
+      hero: 'הירו', story: 'הסיפור', reels: 'עדויות', about: 'עליי', golan: 'עליי', method: 'השיטה',
+      programs: 'מסלולים', testimonials: 'תוצאות', faq: 'שאלות', final: 'פוטר',
+    }
+    const labelOf = (href: string) => {
+      let t = ''
+      try { t = new URL(href).searchParams.get('text') || '' } catch { /* קישור בלי טקסט */ }
+      if (t.includes('קרבי')) return 'הכנה לקרבי'
+      if (t.includes('BIG BOX')) return 'BIG BOX'
+      if (t.includes('פרימיום')) return 'פרימיום'
+      if (t.includes('קבוצה')) return 'אימוני קבוצה'
+      if (t.includes('אונליין')) return 'ליווי אונליין'
+      return 'שיחת היכרות כללית'
+    }
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as Element | null)?.closest?.('a[href*="wa.me"]') as HTMLAnchorElement | null
+      if (!a) return
+      const sec = a.closest('section[id],footer[id],[id="golan"]') as HTMLElement | null
+      const place = sec ? PLACES[sec.id] || sec.id : 'כפתור צף'
+      const payload = JSON.stringify({ type: 'wa_click', label: labelOf(a.href), place })
+      try {
+        navigator.sendBeacon('/api/lead', new Blob([payload], { type: 'application/json' }))
+      } catch { /* לא חוסם את המעבר לוואטסאפ */ }
+    }
+    document.addEventListener('click', onClick, true)
+    return () => document.removeEventListener('click', onClick, true)
+  }, [])
 }

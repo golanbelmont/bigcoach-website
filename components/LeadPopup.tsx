@@ -94,7 +94,7 @@ export default function LeadPopup() {
       await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone, goal, source: 'bigcoach-website', ts: new Date().toISOString() }),
+        body: JSON.stringify({ name, phone, goal, source: 'טופס באתר', ts: new Date().toISOString() }),
       })
     } catch (err) {
       console.error('[lead] submit failed', err)

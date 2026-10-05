@@ -18,6 +18,24 @@ export async function POST(req: Request) {
     /* גוף לא תקין — נטופל בוולידציה למטה */
   }
 
+  const webhooks = [process.env.GOOGLE_SHEETS_WEBHOOK_URL, process.env.CRM_WEBHOOK_URL].filter(
+    (u): u is string => !!u
+  )
+
+  // קליק על כפתור וואטסאפ: אין טלפון, רק על מה לחצו ומאיפה. נרשם בלשונית "קליקים לוואטסאפ".
+  if (body.type === 'wa_click') {
+    const click = { type: 'wa_click', label: String(body.label ?? '').slice(0, 80), place: String(body.place ?? '').slice(0, 40) }
+    console.log('[wa_click]', JSON.stringify(click))
+    await Promise.all(
+      webhooks.map(url =>
+        fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(click) }).catch(err =>
+          console.error('[wa_click] forward failed:', err)
+        )
+      )
+    )
+    return NextResponse.json({ ok: true })
+  }
+
   const cleanPhone = String(body.phone ?? '').replace(/\D/g, '')
   if (cleanPhone.length < 9) {
     return NextResponse.json({ ok: false, error: 'invalid phone' }, { status: 400 })
@@ -56,9 +74,6 @@ export async function POST(req: Request) {
     )
   }
 
-  const webhooks = [process.env.GOOGLE_SHEETS_WEBHOOK_URL, process.env.CRM_WEBHOOK_URL].filter(
-    (u): u is string => !!u
-  )
   jobs.push(
     ...webhooks.map(url =>
       fetch(url, {
