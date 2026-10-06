@@ -19,8 +19,9 @@ npm-debug.log*
 # Vercel
 .vercel/
 
-# Claude Code
-.claude/
+# Claude Code (local settings stay out; project skills are shared)
+.claude/*
+!.claude/skills/
 
 # Temp / build
 /tmp/
