@@ -18,6 +18,7 @@ type Item =
  */
 const ITEMS: Item[] = [
   { type: 'vid', file: 'reel-sochen.mp4', poster: 'reel-sochen.jpg', name: 'הסוכן' },
+  { type: 'vid', file: 'reel-shin.mp4', poster: 'reel-shin.jpg', name: 'ש.' },
   { type: 'vid', file: 'reel-liel.mp4', poster: 'reel-liel.jpg', name: 'ליאל' },
   { type: 'vid', file: 'reel-itamar.mp4', poster: 'reel-itamar.jpg', name: 'איתמר' },
   { type: 'vid', file: 'reel-david.mp4', poster: 'reel-david.jpg', name: 'דוד' },
