@@ -6,7 +6,7 @@ description: |
   רילס, טיקטוק, שורטס או פייסבוק, יחד עם big-coach-video-editor (שם הביצוע הטכני). גם כשמבקשים
   "איזה סגנון", "תערוך ויראלי", "ברמה עולמית", "למה הסרטון לא עבד", "תשפר את העריכה".
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   research_date: "2026-10-06"
 ---
 
@@ -84,12 +84,12 @@ metadata:
 
 לכל סגנון: מבנה בשניות, קצב, כתוביות, סאונד, סוף, ומה לא לעשות. העקרונות של §6 חלים על כולם.
 
-### 1. סקיט / POV / מים
+### 1. סקיט / POV / מים (= G בעורך)
 **רפרנס:** הרילסים הכי נצפים שלו (טבלה ב-§2).
 - **0 עד 1s:** הסיטואציה ברורה מיד. טקסט "POV:" או שורת הקשר קצרה כבר מהפריים הראשון.
 - **1 עד 6s:** בנייה. חלקים משעממים מהירים יותר, ריאקשנים איטיים.
 - **פאנץ' עד שנייה 5 עד 8.** אם הבדיחה מגיעה בשנייה 15, לקצר עד שהיא מגיעה מוקדם.
-- **סוף:** לופ. הפריים האחרון מתחבר לראשון, המוזיקה ממשיכה, בלי "ביי". ⚑ בסגנון הזה בלי כרטיס CTA ולוגו בסוף (הם שוברים את הלופ). ה-CTA הולך לכיתוב.
+- **סוף:** לופ. הפריים האחרון מתחבר לראשון, המוזיקה ממשיכה, בלי "ביי" ובלי כרטיס CTA (הוא שובר את הלופ). ה-CTA הולך לכיתוב.
 - **סאונד:** הסאונד המקורי של המים (חוק מהעורך). מוזיקה רק אם היא חלק מהבדיחה.
 - **לא:** להסביר את הבדיחה בכתובית. מים מת (§6 בעורך).
 
@@ -98,17 +98,17 @@ metadata:
 - **0 עד 2s:** הטענה הכי חדה או המיתוס ("אל תאכל פחמימות בלילה? שקר."), עם טקסט הוק עד 7 מילים. אף פעם לא "היי, אני".
 - **נוסחת Kallaway להוק:** נושא ברור, "אבל", ואז ההפך ממה שהצופה חושב.
 - **גוף:** נקודה אחת, לא חמש. דוגמה או מספר כל 5 עד 8 שניות.
-- **קצב עולמי:** קאטים כל 1 עד 3 שניות, כל שקט מעל 150 עד 250ms נחתך, זום מתחלף 100% ו-115%. ⚑ **אצלו לא:** הוא שונא זום קשה כל 1.8 שניות וקיצוץ של כל נשימה. נשארים עם הזרימה מהעורך (קליפ לכל משפט, push איטי 1.0 עד 1.12, הפסקות מעל 0.30s מתקצרות ל-0.16s, punch עד 1.3 רק על מילת שיא). גם המחקר תומך בזה: MrBeast כתב ב-2024 ש"עידן האוברסטים" לא עובד, ומחקר מאוניברסיטת טרטו (2026, 242 משתתפים) מצא שקצב מהיר יותר הוריד מעורבות.
+- **קצב עולמי:** קאטים כל 1 עד 3 שניות, כל שקט מעל 150 עד 250ms נחתך, זום מתחלף 100% ו-115%. ⚑ **אצלו לא:** הוא שונא זום קשה כל 1.8 שניות וקיצוץ של כל נשימה. נשארים עם הזרימה מהעורך (קליפ לכל משפט, push איטי 1.0 עד 1.10, הפסקות מעל 0.30s מתקצרות ל-0.16s, bump קטן על 3 עד 4 מילות שיא ו-punch חזק אחד של 1.22). גם המחקר תומך בזה: MrBeast כתב ב-2024 ש"עידן האוברסטים" לא עובד, ומחקר מאוניברסיטת טרטו (2026, 242 משתתפים) מצא שקצב מהיר יותר הוריד מעורבות.
 - **אינסרט** (אייקון, צילום מסך, B-roll, אינפוגרפיקה F מהעורך) כל 5 עד 8 שניות.
-- **סוף:** CTA רך ב-2 עד 4 השניות האחרונות, ואז לוגו.
+- **סוף:** כרטיס CTA של 3 שניות, בלי לוגו (כמו בעורך).
 
 ### 3. עדות לקוח (= A בעורך)
-**רפרנס:** הרילס של שי דוכן (v7, "מעולה!") הוא הרף.
+**רפרנס:** `client_100to90_reel_v7` (אושר אחרי 7 סבבים) הוא הרף. הרילס של שי דוכן מראה מימים טובים, אבל עיצוב הכתוביות שלו ישן.
 - **0 עד 2s:** המספר של הלקוח בקול שלו + כותרת הוק ("ירד 7 קילו / בחודש וחצי").
 - **מבנה:** בעיה, מה השתנה, תוצאה. קטעי דיבור של 3 עד 6 שניות.
 - **לפני/אחרי** אחרי שהמספר נאמר, לא לפני.
 - **נשימות:** ברגע רגשי מותר להשאיר עד 400ms. שקט שם עובד.
-- **סוף:** CTA ("רוצים תהליך כזה?") ולוגו, כמו בעורך.
+- **סוף:** כרטיס CTA ("רוצים תהליך כזה?"), בלי לוגו, כמו בעורך.
 - **לא:** שם מלא של הלקוח, מספרים שהלקוח לא אמר, ליטוש שמוחק את האותנטיות.
 
 ### 4. טרנספורמציה לפני/אחרי
@@ -131,7 +131,7 @@ metadata:
 - **קאט על כל ביט או כל שני ביטים:** 0.3 עד 1 שנייה, ב-120 עד 150 BPM. ספיד ראמפ שנוחת על הדרופ.
 - **כמעט בלי טקסט:** שורה אחת בפתיחה לכל היותר.
 - **אורך:** 10 עד 20 שניות, גריידינג בניגודיות גבוהה.
-- **⚑ הבזקים לבנים ורעידות** הם חלק מהסגנון בעולם, אבל אצלו אסור לייצר אפקטים בקוד. נשארים עם קאט, ספיד ראמפ וזום. הבזק רק אם הוא מבקש.
+- **הבזקים ורעידות:** חלק מהסגנון בעולם. אצלו (העורך, "יישוב סתירות") מותרים במינון נמוך ורק על מכה או דרופ, לא על כל ביט. בספק, לשאול אותו.
 - **מוזיקה:** Pixabay בלי מגן. אם עולה גם לשורטס מעל דקה, רק מוזיקה בלי מגן (בכל מקרה הסגנון הזה קצר).
 
 ### 7. ביקורת קרבות
@@ -161,10 +161,10 @@ metadata:
 2. **בלי אינטרו, לוגו בהתחלה או ברכה.**
 3. **משהו משתנה כל 3 עד 8 שניות** לפי הסגנון: אינסרט, זווית, טקסט, מים, סאונד. העקרונות של MrBeast, מותאמים לשורטס: הימור או תוצאה בפריים הראשון, שפה פשוטה, רגע "וואו" אחד, ביט חדש כל 5 עד 8 שניות. בלי אוברסטים.
 4. **כתוביות צרובות** (כ-80% מהטיקטוקים הוויראליים במדגם של OpusClip, ו-69% מהאנשים צופים בלי קול במקום ציבורי). 1 עד 4 מילים במסך.
-5. **Safe zone ל-1080x1920:** כל מה שצריך לקרוא נמצא בין y=270 ל-y=1210, ברוחב של עד 700px. ה-UI של רילס מכסה כ-35% תחתונים (כ-670px). ⚑ בעורך הכתוביות יושבות ב-y≈1260 והכלל שם הוא "לא ב-20% התחתונים". זה קרוב מדי לאזור של הכיתוב והכפתורים. להציע לו להעלות ל-y≈1080 עד 1150, ולוודא שהתחתית של בלוק הכתוביות לא עוברת את y=1210.
+5. **Safe zone ל-1080x1920:** ברילס אורגני, כל מה שצריך לקרוא נמצא בין y≈250 לקצה תחתון של y≈1540. מ-y≈1570 ומטה יושבים שם המשתמש, הכיתוב והאודיו, ובצד ימין הכפתורים, אז שורה ברוחב עד 840px וממורכזת. במודעה ממומנת מטא מכסה 35% תחתונים, אז שם כל הטקסט מעל y≈1250. למספרים של רילס אורגני אין מקור רשמי, הם ממדריכים של כלי עריכה. הכתוביות בעורך יושבות על החזה, והקצה התחתון שלהן מעל y≈1540.
 6. **סאונד:** בסגנונות של דיבור, מוזיקה 12 עד 18dB מתחת לקול, עם דאקינג. במונטאז' המוזיקה היא הקול. אפקטים 6 עד 12dB מתחת לקול. ‎-14 LUFS, true peak עד ‎-1dBTP (העורך כבר עושה את זה).
 7. **מקוריות:** בלי סימן מים של אפליקציה אחרת. בכל סרטון יש צילום, קול או עריכה שלו.
-8. **סוף:** בסגנונות חשיפה, לופ. בסגנונות לידים, CTA רך ב-2 עד 4 השניות האחרונות ואז לוגו. לא לשים CTA באמצע אלא אם הסרטון מעל דקה (אז ב-60% עד 70% שלו).
+8. **סוף:** בסגנונות חשיפה, לופ. בסגנונות לידים, כרטיס CTA בשניות האחרונות, בלי לוגו. לא לשים CTA באמצע אלא אם הסרטון מעל דקה (אז ב-60% עד 70% שלו).
 
 ## 7. תוכנית עריכה (לשלוח לו לפני שמתחילים, הודעה קצרה)
 
@@ -173,7 +173,7 @@ metadata:
 הוק (0 עד 2s): תמונה: [..] · טקסט: [..] · משפט: [..]
 0–Xs  | מה רואים | מה שומעים | טקסט/מים
 ...
-סוף: [לופ / CTA + לוגו]
+סוף: [לופ / כרטיס CTA]
 נכסים להוריד: [רשימה, או "אין"]
 ```
 
@@ -189,7 +189,7 @@ metadata:
 | 2 | משפט ראשון | נגמר עד 2.0s, בלי ברכה/לוגו | חובה |
 | 3 | שקט או פריים סטטי | עד 1.0s, חוץ מפריז מכוון | חובה |
 | 4 | שינוי ויזואלי | לפי הסגנון, לא יותר מ-8s בלי שינוי | חובה |
-| 5 | כתוביות ב-safe zone | y בין 270 ל-1210, רוחב עד 700px | חובה |
+| 5 | כתוביות ב-safe zone | קצה תחתון מעל y≈1540 (במודעה מעל 1250), רוחב עד 840px | חובה |
 | 6 | עברית | RTL תקין, סימני פיסוק בצד הנכון, פונט עם עברית | חובה |
 | 7 | עוצמה | ‎-14 LUFS ±1, peak עד ‎-1, מוזיקה לא מכסה דיבור | חובה |
 | 8 | אורך | בטווח של הסגנון (§4) | |
@@ -227,6 +227,6 @@ metadata:
 
 ## מקורות
 
-אינסטגרם: [סיגנלים](https://www.socialmediatoday.com/news/instagram-shares-algorithm-insights-2025/738034/), [skip rate](https://www.socialsamosa.com/news-2/instagram-retention-chart-skip-rate-new-performance-metrics-reels-9730992), [מקוריות 2026](https://techcrunch.com/2026/04/30/instagram-restricts-reach-of-content-aggregators-in-new-crackdown/), [מדריך רילס 2026](https://www.iphoneincanada.ca/2026/09/28/instagram-shares-ultimate-blueprint-for-viral-reels-in-2026/), [CTA](https://www.socialmediatoday.com/news/instagram-clarifies-advice-on-single-word-ctas-and-longer-reels/718151/), [Trial Reels](https://storrito.com/resources/how-instagram-trial-reels-work-72-hours/), [safe zones](https://adnova.ai/blogs/meta-ad-safe-zones-guide). פלטפורמות אחרות: [TikTok](https://newsroom.tiktok.com/en-us/how-tiktok-recommends-videos-for-you/), [Shorts ו-Content ID](https://support.google.com/youtube/answer/15424877), [ספירת צפיות ב-Shorts](https://techcrunch.com/2025/03/26/youtube-is-changing-how-youtube-shorts-views-are-counted), [פייסבוק](https://www.tubefilter.com/2025/07/15/ai-slop-unoriginal-repetitive-content-monetization-facebook-meta/). קצב וסגנון: [MrBeast על קצב](https://tubefilter.com/2024/03/04/mrbeast-editing-style-number-of-cuts-per-video/), [מחקר טרטו](https://dspace.ut.ee/items/cb8dc46c-0841-4fed-91af-17db99f1b2d4/full), [Hormozi](https://www.choppity.com/tools/recreate-video-editing-style/alex-hormozi/), [Ali Abdaal](https://www.submagic.co/blog/make-shorts-like-ali-abdaal), [Iman Gadzhi](https://sendshort.ai/guides/iman-gadzhi-style/), [נוסחת Kallaway](https://sozai.app/transcript/create-irresistible-hooks-blow-content/), [מזכר MrBeast](https://www.alexanderjarvis.com/memo-how-to-succeed-in-mrbeast-production/), [כתוביות בסרטונים ויראליים](https://www.opus.pro/blog/anatomy-of-a-viral-tiktok-2026), [צפייה בלי קול](https://www.streamingmedia.com/Articles/News/Online-Video-News/80-of-Video-Caption-Users-Arent-Hearing-Impaired-Finds-Verizon-131860.aspx). עברית: [libass](https://raw.githubusercontent.com/libass/libass/master/libass/ass.h), [Premiere](https://community.adobe.com/t5/premiere-pro-discussions/srt-import-with-right-to-left-language-e-g-hebrew-arabic-text-is-reversed/m-p/11908967), [ivrit-ai](https://huggingface.co/ivrit-ai).
+אינסטגרם: [סיגנלים](https://www.socialmediatoday.com/news/instagram-shares-algorithm-insights-2025/738034/), [skip rate](https://www.socialsamosa.com/news-2/instagram-retention-chart-skip-rate-new-performance-metrics-reels-9730992), [מקוריות 2026](https://techcrunch.com/2026/04/30/instagram-restricts-reach-of-content-aggregators-in-new-crackdown/), [מדריך רילס 2026](https://www.iphoneincanada.ca/2026/09/28/instagram-shares-ultimate-blueprint-for-viral-reels-in-2026/), [CTA](https://www.socialmediatoday.com/news/instagram-clarifies-advice-on-single-word-ctas-and-longer-reels/718151/), [Trial Reels](https://storrito.com/resources/how-instagram-trial-reels-work-72-hours/), safe zones ([מודעות מטא](https://adnova.ai/blogs/meta-ad-safe-zones-guide), [רילס אורגני](https://quso.ai/blog/instagram-reel-dimensions), [עוד אחד](https://www.screensnap.pro/blog/instagram-reels-size-guide)). פלטפורמות אחרות: [TikTok](https://newsroom.tiktok.com/en-us/how-tiktok-recommends-videos-for-you/), [Shorts ו-Content ID](https://support.google.com/youtube/answer/15424877), [ספירת צפיות ב-Shorts](https://techcrunch.com/2025/03/26/youtube-is-changing-how-youtube-shorts-views-are-counted), [פייסבוק](https://www.tubefilter.com/2025/07/15/ai-slop-unoriginal-repetitive-content-monetization-facebook-meta/). קצב וסגנון: [MrBeast על קצב](https://tubefilter.com/2024/03/04/mrbeast-editing-style-number-of-cuts-per-video/), [מחקר טרטו](https://dspace.ut.ee/items/cb8dc46c-0841-4fed-91af-17db99f1b2d4/full), [Hormozi](https://www.choppity.com/tools/recreate-video-editing-style/alex-hormozi/), [Ali Abdaal](https://www.submagic.co/blog/make-shorts-like-ali-abdaal), [Iman Gadzhi](https://sendshort.ai/guides/iman-gadzhi-style/), [נוסחת Kallaway](https://sozai.app/transcript/create-irresistible-hooks-blow-content/), [מזכר MrBeast](https://www.alexanderjarvis.com/memo-how-to-succeed-in-mrbeast-production/), [כתוביות בסרטונים ויראליים](https://www.opus.pro/blog/anatomy-of-a-viral-tiktok-2026), [צפייה בלי קול](https://www.streamingmedia.com/Articles/News/Online-Video-News/80-of-Video-Caption-Users-Arent-Hearing-Impaired-Finds-Verizon-131860.aspx). עברית: [libass](https://raw.githubusercontent.com/libass/libass/master/libass/ass.h), [Premiere](https://community.adobe.com/t5/premiere-pro-discussions/srt-import-with-right-to-left-language-e-g-hebrew-arabic-text-is-reversed/m-p/11908967), [ivrit-ai](https://huggingface.co/ivrit-ai).
 
 מספרים שמגיעים מחברות כלים או מ"ידע של יוצרים" (קצב קאטים, גודל פונט, עוצמות מוזיקה, ספי skip rate) הם נקודת התחלה, לא חוק. הנתונים שלו ב-§2 ו-§9 גוברים עליהם.
