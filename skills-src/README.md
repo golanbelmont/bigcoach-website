@@ -7,6 +7,7 @@ claude.ai settings under Skills.
 
 - `big-coach-video-editor/`: the video editor, with `scripts/`
   (face_safe.py, qa_sheet.py, final_check.py).
+- `big-coach-carousel/`: the posts and carousels editor (Canva).
 
 The project skills in `.claude/skills/` (big-coach-humanizer,
 big-coach-edit-styles) load automatically in this repo and are also
