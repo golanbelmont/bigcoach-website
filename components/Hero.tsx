@@ -9,7 +9,7 @@ export default function Hero() {
         <Ph img="hero.jpg" alt="" label="hero.jpg (1920×1080)" eager sizes="(max-width:860px) 178vh, 100vw" quality={85} />
       </div>
       <div className="hero-cut" aria-hidden="true">
-        <Ph img="golan-cut.png" alt="" label="golan-cut.png (PNG חתוך, ~900×1400)" eager sizes="(max-width:860px) 68vw, 44vw" quality={90} />
+        <Ph img="golan-cut-2.png" alt="" label="golan-cut-2.png (PNG חתוך, 1369×1333)" eager sizes="(max-width:860px) 68vw, 44vw" quality={90} />
       </div>
       <div className="hero-content">
         <div className="hero-badge">

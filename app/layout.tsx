@@ -66,6 +66,7 @@ const JSON_LD = {
     'https://www.instagram.com/_big_coach_/',
     'https://www.tiktok.com/@big.coach.golan.boublil',
     'https://www.facebook.com/golan.boublil/',
+    'https://www.youtube.com/@BigCoachAcademy',
   ],
 }
 

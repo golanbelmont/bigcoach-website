@@ -293,7 +293,7 @@ h2{font-size:clamp(2.1rem,4.2vw,3.5rem);font-weight:800;line-height:1.12;letter-
 #programs{position:relative;margin:var(--gap);padding:var(--gap);background:var(--white);border-radius:var(--radius-xl)}
 /* scrolling slideshow: sticky frame, scroll position scrubs through the slides */
 .slideshow{position:sticky;top:var(--gap);height:calc(100vh - 2.4rem);z-index:1;border-radius:28px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.25);background:var(--black);--show-p:0}
-.show-spacer{height:500vh;pointer-events:none}
+.show-spacer{height:600vh;pointer-events:none}
 .prog-slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .75s cubic-bezier(.22,.7,.3,1);z-index:1}
 .prog-slide.active{opacity:1;pointer-events:auto;z-index:2}
 .show-chrome{position:absolute;bottom:2.2rem;left:3.5rem;z-index:6;display:flex;flex-direction:column;align-items:flex-start;gap:.85rem;pointer-events:none}

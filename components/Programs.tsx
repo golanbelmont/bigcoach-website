@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import Ph from './Ph'
 import { Arrow, Mask } from './icons'
-import { WA_ONLINE, WA_GROUP, WA_PERSONAL, WA_BOXING, WA_COMBAT } from '@/lib/links'
+import { WA_ONLINE, WA_GROUP, WA_PERSONAL, WA_BOXING, WA_COMBAT, WA_REHAB } from '@/lib/links'
 
 type Prog = {
   key: string
@@ -132,8 +132,46 @@ const PROGS: Prog[] = [
         ),
       },
     ],
-    fit: 'מי שרוצה את הדרך הכי מהירה לתוצאה ויחס אישי מלא, גם באימונים עצמם. וגם מי שחוזר מפציעה וצריך שיקום ובנייה מחדש של הגוף.',
+    fit: 'מי שרוצה את הדרך הכי מהירה לתוצאה ויחס אישי מלא, גם באימונים עצמם.',
     wa: WA_PERSONAL,
+  },
+  {
+    key: 'rehab',
+    name: 'שיקום פציעות ובניית גוף',
+    title: (
+      <>
+        שיקום פציעות
+        <br />
+        ובניית גוף
+      </>
+    ),
+    cap: 'חוזרים לזוז בלי כאב. בהדרגה ובביטחון.',
+    img: 'https://images.unsplash.com/photo-1645005512942-a17817fb7c11?w=1920&q=80&fm=jpg&fit=crop',
+    imgLabel: 'prog-rehab.jpg (1920×1080)',
+    detailTitle: (
+      <>
+        שיקום
+        <br />
+        פציעות
+      </>
+    ),
+    detailSub: 'כאבי גב | אחרי פציעה | אחרי ניתוח.',
+    thumb: 'prog-rehab-thumb.jpg',
+    thumbLabel: 'prog-rehab-thumb.jpg',
+    text: (
+      <>
+        מסלול למי שסוחב פציעה, כאבי גב או חוזר אחרי ניתוח. מתחילים מהשאלון הרפואי ומאישור רופא כשצריך, בונים תכנית שעובדת
+        סביב הפציעה ולא נגדה, וצוות המאמנים מלווה כל תרגיל בסטודיו. את התזונה והתכנית אני בונה ומעדכן לפי ההתקדמות, עד שחוזרים
+        להתאמן רגיל בלי לפחד.
+      </>
+    ),
+    rows: [
+      { k: 'מתחילים', v: 'שאלון רפואי ואישור רופא כשצריך' },
+      { k: 'מיקום', v: 'ח"נ ביאליק 137, באר שבע' },
+    ],
+    fit: 'מי שסוחב פציעה או כאבי גב, חוזר אחרי ניתוח, או רוצה לחזור להתאמן בלי לפחד להיפצע שוב.',
+    credit: 'צילום: Sincerely Media, Unsplash',
+    wa: WA_REHAB,
   },
   {
     key: 'boxing',
@@ -263,7 +301,7 @@ function StageUI({ prog, open, onToggle }: { prog: Prog; open: boolean; onToggle
 
 /*
  * סליידשואו נגלל (2026-07): מסגרת sticky אחת, ומיקום הגלילה קובע איזה פריים מוצג —
- * כמו scrubbing של וידאו. ה-spacer (500vh) קובע את אורך הגלילה; כל צעד מחליף שקופית.
+ * כמו scrubbing של וידאו. ה-spacer (600vh) קובע את אורך הגלילה; כל צעד מחליף שקופית.
  * פס התקדמות (--show-p) + נקודות מסמנים את מיקום הסקראב. במובייל הסליידשואו כבוי.
  */
 export default function Programs() {

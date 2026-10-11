@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'i.ytimg.com', pathname: '/vi/**' },
       // תמונת ההכנה לקרבי: צילום דובר צה"ל מ-Wikimedia Commons (CC BY 2.0)
       { protocol: 'https', hostname: 'upload.wikimedia.org', pathname: '/wikipedia/commons/**' },
+      // תמונת שיקום הפציעות: Unsplash (Unsplash License, צילום Sincerely Media)
+      { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
     ],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [360, 414, 480, 640, 750, 828, 1080, 1280, 1600, 1920],
