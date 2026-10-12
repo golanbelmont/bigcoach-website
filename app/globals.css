@@ -602,8 +602,9 @@ html,body{max-width:100%;overflow-x:clip}
     padding-bottom:max(3rem,env(safe-area-inset-bottom));
     padding-left:max(2rem,env(safe-area-inset-left));
   }
-  .hero-cut{display:block;left:-6vw;right:auto;margin:0;width:min(120vw,640px);height:84%;z-index:1;opacity:1}
-  .hero-cut .ph>img{object-position:bottom left}
+  /* 2026-10-12: התמונה החדשה רחבה (יד מושטת). במובייל היא יושבת בחלק העליון ונמסה למטה, והכותרת מתחת לה, בלי חפיפה */
+  .hero-cut{display:block;top:clamp(4.5rem,9svh,6rem);bottom:auto;left:0;right:0;margin:0 auto;width:100%;height:clamp(200px,calc(100svh - 450px),440px);z-index:1;opacity:1;-webkit-mask-image:linear-gradient(to bottom,#000 50%,transparent 100%);mask-image:linear-gradient(to bottom,#000 50%,transparent 100%)}
+  .hero-cut .ph>img{object-position:center top}
   #hero h1{text-shadow:0 2px 6px rgba(0,0,0,.55),0 8px 40px rgba(0,0,0,.6)}
   .hero-note{color:rgba(238,238,238,.95);font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.7)}
   .floater{display:none}

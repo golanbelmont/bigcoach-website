@@ -146,7 +146,7 @@ const PROGS: Prog[] = [
       </>
     ),
     cap: 'חוזרים לזוז בלי כאב. בהדרגה ובביטחון.',
-    img: 'https://images.unsplash.com/photo-1645005512942-a17817fb7c11?w=1920&q=80&fm=jpg&fit=crop',
+    img: 'https://images.unsplash.com/photo-1645005512942-a17817fb7c11?w=1400&q=68&fm=webp&fit=crop',
     imgLabel: 'prog-rehab.jpg (1920×1080)',
     detailTitle: (
       <>
@@ -220,7 +220,7 @@ const PROGS: Prog[] = [
       </>
     ),
     cap: 'מגיעים לגיבוש מוכנים. בגוף ובראש.',
-    img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flickr_-_Israel_Defense_Forces_-_Saluting_the_Flag.jpg/1920px-Flickr_-_Israel_Defense_Forces_-_Saluting_the_Flag.jpg',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flickr_-_Israel_Defense_Forces_-_Saluting_the_Flag.jpg/1280px-Flickr_-_Israel_Defense_Forces_-_Saluting_the_Flag.jpg',
     imgLabel: 'prog-combat.jpg (1920×1080)',
     detailTitle: (
       <>
