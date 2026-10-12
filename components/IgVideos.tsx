@@ -1,49 +1,87 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { vidUrl } from '@/lib/assets'
 
 /*
- * "קצת ממה שאני מסביר" (2026-10-12): רילסים של תוכן (לא עדויות) מהאינסטגרם.
- * הכרטיס מעוצב כטקסט; ההטמעה של אינסטגרם נטענת רק בלחיצה (בלי עוגיות של מטא לפני כן, ובלי משקל מיותר).
- * להוספה/החלפה: מזהה הרילס מהקישור instagram.com/reel/<id>/
+ * "קצת ממה שאני מסביר" (2026-10-12): רילסים של תוכן (לא עדויות) שהורדו מהאינסטגרם של ביג קואוץ'
+ * ומתארחים אצלנו (assets/vid/ig-<id>.mp4 + .jpg), כדי שינוגנו בתוך האתר ולא יוציאו לאינסטגרם.
+ * להוספה: להוריד את הרילס, לדחוס (720×1280, H.264, faststart), להעלות ig-<id>.mp4 + ig-<id>.jpg ולהוסיף שורה.
  */
-type Ig = { id: string; tag: string; title: string; sub: string }
+type Ig = { id: string; tag: string; title: string }
 
 const IG: Ig[] = [
-  { id: 'Dd61Doqk382', tag: 'תזונה', title: 'אוכלת 1200 קלוריות ולא יורדת?', sub: 'זה לא את. זה החישוב.' },
-  { id: 'DeCjXxOjqrT', tag: 'התמדה', title: 'מוטיבציה? עזבו.', sub: 'השאלה האמיתית היא איך מתמידים.' },
-  { id: 'Ddl4_h-ipss', tag: 'מדדים', title: 'לא נשקלת בהתחלה?', sub: 'אז איך תדע שאתה מתקדם.' },
-  { id: 'DeGzATRiWu_', tag: 'ראש', title: 'למי לא להקשיב', sub: 'מוטיבציה זה גם לדעת את מי לסנן.' },
-  { id: 'DdrKnvkiW1Y', tag: 'התהליך', title: 'מי מצליח אצלי ומי לא', sub: 'שני סוגים של אנשים שפונים אליי.' },
-  { id: 'DeXJh11j7H3', tag: 'התחלה', title: 'ומה אם דווקא תצליח?', sub: 'השאלה ההפוכה לפחד מכישלון.' },
+  { id: 'Dd61Doqk382', tag: 'תזונה', title: 'אוכלת 1200 קלוריות ולא יורדת?' },
+  { id: 'DeCjXxOjqrT', tag: 'התמדה', title: 'מוטיבציה? עזבו.' },
+  { id: 'Ddl4_h-ipss', tag: 'מדדים', title: 'לא נשקלת בהתחלה?' },
+  { id: 'DeGzATRiWu_', tag: 'ראש', title: 'למי לא להקשיב' },
+  { id: 'DdrKnvkiW1Y', tag: 'התהליך', title: 'מי מצליח אצלי ומי לא' },
+  { id: 'DeXJh11j7H3', tag: 'התחלה', title: 'ומה אם דווקא תצליח?' },
 ]
 
-const IG_PROFILE = 'https://www.instagram.com/_big_coach_/'
+function Card({ ig, playing, onPlay, onStop }: { ig: Ig; playing: boolean; onPlay: () => void; onStop: () => void }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const v = useRef<HTMLVideoElement>(null)
+  const [near, setNear] = useState(false)
 
-function Card({ ig, n }: { ig: Ig; n: number }) {
-  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      es => {
+        if (es.some(e => e.isIntersecting)) {
+          setNear(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '300px 600px' }
+    )
+    io.observe(el)
+    // יצא מהמסך בזמן ניגון → עוצרים
+    const vis = new IntersectionObserver(es => es.forEach(e => !e.isIntersecting && v.current && !v.current.paused && v.current.pause()), {
+      threshold: 0,
+    })
+    vis.observe(el)
+    return () => {
+      io.disconnect()
+      vis.disconnect()
+    }
+  }, [])
+
+  // כרטיס אחר התחיל לנגן → עוצרים את זה
+  useEffect(() => {
+    if (!playing && v.current && !v.current.paused) v.current.pause()
+  }, [playing])
+
+  const play = () => {
+    const el = v.current
+    if (!el) return
+    el.muted = false
+    el.controls = true
+    el.play().catch(() => {})
+    onPlay()
+  }
+
   return (
-    <div className={`ig-card${open ? ' is-open' : ''}`}>
-      {open ? (
-        <iframe
-          src={`https://www.instagram.com/reel/${ig.id}/embed/`}
-          title={ig.title}
-          allow="autoplay; encrypted-media; picture-in-picture; clipboard-write"
-          allowFullScreen
-          scrolling="no"
+    <div className={`ig-card${playing ? ' is-playing' : ''}`} ref={ref}>
+      {near && (
+        <video
+          ref={v}
+          src={`${vidUrl(`ig-${ig.id}.mp4`)}#t=0.1`}
+          poster={vidUrl(`ig-${ig.id}.jpg`)}
+          playsInline
+          preload="metadata"
+          onPause={e => !e.currentTarget.seeking && onStop()}
+          onEnded={onStop}
         />
-      ) : (
-        <button type="button" className="ig-face" onClick={() => setOpen(true)} aria-label={`צפייה: ${ig.title}`}>
-          <span className="ig-top">
-            <span className="ig-n">{String(n).padStart(2, '0')}</span>
-            <span className="ig-tag">{ig.tag}</span>
-          </span>
-          <span className="ig-title">{ig.title}</span>
-          <span className="ig-sub">{ig.sub}</span>
+      )}
+      {!playing && (
+        <button type="button" className="ig-face" onClick={play} aria-label={`הפעל: ${ig.title}`}>
+          <span className="ig-tag">{ig.tag}</span>
           <span className="ig-play" aria-hidden="true">
             <span className="play-ic" />
           </span>
-          <span className="ig-src">רילס · אינסטגרם</span>
+          <span className="ig-title">{ig.title}</span>
         </button>
       )}
     </div>
@@ -51,21 +89,23 @@ function Card({ ig, n }: { ig: Ig; n: number }) {
 }
 
 export default function IgVideos() {
+  const [active, setActive] = useState<string | null>(null)
   return (
     <section id="ig-videos">
       <div className="ig-head reveal">
         <h2>קצת ממה שאני מסביר כל יום.</h2>
-        <p className="sec-sub">סרטונים קצרים מהאינסטגרם. תזונה, אימונים והראש שמאחוריהם. בלי חפירות.</p>
+        <p className="sec-sub">סרטונים קצרים. תזונה, אימונים והראש שמאחוריהם. בלי חפירות.</p>
       </div>
       <div className="ig-strip reveal" data-d="1">
-        {IG.map((ig, i) => (
-          <Card key={ig.id} ig={ig} n={i + 1} />
+        {IG.map(ig => (
+          <Card
+            key={ig.id}
+            ig={ig}
+            playing={active === ig.id}
+            onPlay={() => setActive(ig.id)}
+            onStop={() => setActive(cur => (cur === ig.id ? null : cur))}
+          />
         ))}
-      </div>
-      <div className="ig-more reveal" data-d="2">
-        <a href={IG_PROFILE} target="_blank" rel="noopener" className="u-link">
-          עוד באינסטגרם @_big_coach_
-        </a>
       </div>
     </section>
   )
