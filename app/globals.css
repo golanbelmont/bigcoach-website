@@ -1022,3 +1022,26 @@ main h2.rv-h.h-center::after{margin-inline:auto;transform-origin:center}
   [data-prog].open .prog-detail{overflow:visible}
 }
 .pd-credit{display:block;font-size:.72rem;color:rgba(238,238,238,.4);margin:-1rem 0 1.2rem}
+
+/* ── קצת ממה שאני מסביר (רילסים של תוכן מהאינסטגרם, 2026-10-12) ── */
+#ig-videos{background:var(--black);padding:4.5rem 0 3.5rem;overflow:hidden}
+.ig-head{max-width:760px;margin:0 auto 2.2rem;text-align:center;padding:0 var(--pad-x)}
+.ig-strip{display:flex;gap:1.1rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:.4rem var(--pad-x) 1.2rem;scrollbar-width:none;overscroll-behavior-x:contain}
+.ig-strip::-webkit-scrollbar{display:none}
+.ig-card{flex:0 0 min(300px,76vw);height:540px;border-radius:22px;overflow:hidden;position:relative;scroll-snap-align:center;background:#1a1a1a;border:1px solid rgba(238,238,238,.08);transition:border-color .3s ease,transform .3s ease}
+.ig-card:not(.is-open):hover{border-color:rgba(202,6,44,.55);transform:translateY(-3px)}
+.ig-card.is-open{background:#fff;height:620px}
+.ig-card iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ig-face{position:absolute;inset:0;width:100%;display:flex;flex-direction:column;align-items:flex-start;text-align:right;gap:.8rem;padding:1.6rem 1.5rem;border:0;cursor:pointer;color:var(--white);font-family:var(--font-run);background:radial-gradient(120% 70% at 85% 0%,rgba(202,6,44,.28),transparent 60%),linear-gradient(180deg,#262626 0%,#141414 100%)}
+.ig-top{display:flex;width:100%;justify-content:space-between;align-items:center}
+.ig-n{font-family:var(--font-head);font-weight:900;font-size:1rem;color:rgba(238,238,238,.4)}
+.ig-tag{font-size:.82rem;font-weight:700;padding:.28rem .75rem;border-radius:999px;background:rgba(202,6,44,.16);color:#ff5a76;border:1px solid rgba(202,6,44,.4)}
+.ig-title{margin-top:auto;font-family:var(--font-head);font-weight:900;font-size:clamp(1.7rem,2.4vw,2.05rem);line-height:1.15}
+.ig-sub{font-size:1.02rem;line-height:1.6;color:rgba(238,238,238,.7)}
+.ig-play{position:relative;width:60px;height:60px;margin:1.2rem 0 .6rem}
+.ig-play .play-ic{transition:transform .25s ease}
+.ig-face:hover .ig-play .play-ic{transform:translate(-50%,-50%) scale(1.08)}
+.ig-src{font-size:.8rem;letter-spacing:.04em;color:rgba(238,238,238,.45)}
+.ig-more{text-align:center;margin-top:1.2rem;font-weight:700;padding:0 var(--pad-x)}
+@media (min-width:1500px){.ig-strip{justify-content:center}}
+@media (max-width:860px){#ig-videos{padding:3.2rem 0 2.6rem}.ig-card{height:480px}.ig-card.is-open{height:600px}}
