@@ -19,7 +19,7 @@ const heebo = Heebo({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bigcoach.co.il'
 const TITLE = 'BIG COACH, גולן בלמונט | ליווי תזונה ואימונים'
-const DESC = 'ליווי אישי צמוד לאימונים, תזונה ומנטליות. גולן בלמונט, באר שבע והדרום. אונליין בכל הארץ.'
+const DESC = 'ליווי אישי צמוד לאימונים ותזונה. גולן בלמונט, סטודיו בבאר שבע והדרום. אונליין בכל הארץ.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'BIG COACH',
     title: TITLE,
-    description: 'ליווי אישי צמוד לאימונים, תזונה ומנטליות. שיחת היכרות 20 דקות, בלי עלות.',
-    images: [{ url: imgUrl('hero.jpg'), width: 1920, height: 1080, alt: 'BIG COACH, גולן בלמונט' }],
+    description: 'ליווי אישי צמוד לאימונים ותזונה. סטודיו בבאר שבע ואונליין מכל הארץ. שיחת היכרות 20 דקות, בלי עלות.',
+    images: [{ url: imgUrl('og-share.jpg'), width: 1200, height: 630, alt: 'BIG COACH, גולן בלמונט. נמאס לך להתחיל כל פעם מחדש?' }],
     locale: 'he_IL',
   },
   twitter: { card: 'summary_large_image' },

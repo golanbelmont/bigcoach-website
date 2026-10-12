@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Arrow, CloseIcon } from './icons'
-import { WA_GENERAL } from '@/lib/links'
+import { enc } from '@/lib/links'
 
 /*
  * פופאפ השארת פרטים. נפתח מכל אלמנט עם data-lead-open (האזנה מואצלת על document),
@@ -12,6 +12,7 @@ export default function LeadPopup() {
   const [state, setState] = useState<'hidden' | 'open' | 'success'>('hidden')
   const [visible, setVisible] = useState(false)
   const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState<{ name: string; goal: string } | null>(null)
   const cardRef = useRef<HTMLDivElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const lastFocus = useRef<Element | null>(null)
@@ -65,6 +66,7 @@ export default function LeadPopup() {
     setTimeout(() => {
       setState('hidden')
       setSending(false)
+      setSent(null)
       formRef.current?.reset()
       ;(lastFocus.current as HTMLElement | null)?.focus?.()
     }, 350)
@@ -99,8 +101,8 @@ export default function LeadPopup() {
     } catch (err) {
       console.error('[lead] submit failed', err)
     }
+    setSent({ name: name.split(' ')[0], goal })
     setState('success')
-    setTimeout(close, 3500)
   }
 
   if (state === 'hidden') return null
@@ -169,15 +171,24 @@ export default function LeadPopup() {
         ) : (
           <div className="lead-success">
             <div className="lead-success-icon">✓</div>
-            <h3>קיבלנו!</h3>
-            <p>
-              גולן יחזור אליך בהקדם.
-              <br />
-              עד אז, אפשר גם בוואטסאפ:{' '}
-              <a href={WA_GENERAL} style={{ color: 'var(--white)' }}>
-                052-689-6182
-              </a>
-            </p>
+            <h3 id="leadPopupTitle">קיבלנו{sent?.name ? `, ${sent.name}` : ''}!</h3>
+            <p>גולן יחזור אליך בהקדם. בלי לחץ ובלי התחייבות.</p>
+            <a
+              className="lead-wa"
+              href={enc(`היי גולן, השארתי פרטים באתר${sent?.name ? ` (${sent.name})` : ''}.${sent?.goal ? ` המטרה שלי: ${sent.goal}.` : ''} אשמח שנדבר.`)}
+              target="_blank"
+            >
+              לא רוצה לחכות? דבר איתי בוואטסאפ
+            </a>
+            <a
+              className="lead-more"
+              href="#reels"
+              onClick={() => {
+                close()
+              }}
+            >
+              בינתיים, תשמע מה מתאמנים מספרים
+            </a>
           </div>
         )}
       </div>

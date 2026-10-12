@@ -166,6 +166,7 @@ function Reel({ id, item, dragDist, hidden, playing, onPlay, onStop }: ReelProps
         </button>
       )}
       {loading && <span className="reel-spin" aria-hidden="true" />}
+      {item.type === 'vid' && item.name && !playing && <span className="reel-name">{item.name}</span>}
     </div>
   )
 }

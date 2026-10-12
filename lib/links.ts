@@ -1,7 +1,7 @@
 // כל קישורי הוואטסאפ כוללים ?text= עם הודעה מוכנה — לא להסיר
 const WA_BASE = 'https://wa.me/972526896182'
 
-const enc = (t: string) => `${WA_BASE}?text=${encodeURIComponent(t)}`
+export const enc = (t: string) => `${WA_BASE}?text=${encodeURIComponent(t)}`
 
 export const WA_GENERAL = enc('היי גולן, הגעתי מהאתר ואני רוצה לקבוע שיחת היכרות.')
 export const WA_ONLINE = enc('היי גולן, הגעתי מהאתר. מעניין אותי ליווי האונליין, אשמח לשמוע איך זה עובד.')

@@ -358,7 +358,7 @@ export default function Programs() {
         {PROGS.map((prog, i) => (
           <div
             key={prog.key}
-            className={`prog-slide prog-stage${i === active ? ' active' : ''}${open === i ? ' open' : ''}`}
+            className={`prog-slide prog-stage prog-${prog.key}${i === active ? ' active' : ''}${open === i ? ' open' : ''}`}
             data-prog
           >
             <div className="prog-bg">
