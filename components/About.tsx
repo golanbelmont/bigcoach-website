@@ -1,6 +1,7 @@
 import Ph from './Ph'
 import Cnum from './Cnum'
 import CredToggle from './CredToggle'
+import Team from './Team'
 import { Arrow, Mask } from './icons'
 import { WA_GENERAL } from '@/lib/links'
 
@@ -114,6 +115,7 @@ export default function About() {
           </div>
         </div>
       </div>
+      <Team />
     </section>
   )
 }
