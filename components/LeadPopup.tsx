@@ -87,6 +87,7 @@ export default function LeadPopup() {
     const name = nameEl.value.trim()
     const phone = phoneEl.value.replace(/\D/g, '')
     const goal = goalEl.value
+    const marketing = (form.elements.namedItem('marketing') as HTMLInputElement | null)?.checked ?? false
     if (!name) return markErr(nameEl)
     if (phone.length < 9) return markErr(phoneEl)
     if (!goal) return markErr(goalEl)
@@ -96,7 +97,7 @@ export default function LeadPopup() {
       await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone, goal, source: 'טופס באתר', ts: new Date().toISOString() }),
+        body: JSON.stringify({ name, phone, goal, marketing, source: 'טופס באתר', ts: new Date().toISOString() }),
       })
     } catch (err) {
       console.error('[lead] submit failed', err)
@@ -154,6 +155,10 @@ export default function LeadPopup() {
                   <option value="אחר">אחר</option>
                 </select>
               </div>
+              <label className="lead-consent" htmlFor="leadMarketing">
+                <input type="checkbox" id="leadMarketing" name="marketing" />
+                <span>אני מאשר/ת לקבל מ-Big Coach עדכונים, טיפים והצעות בוואטסאפ, SMS ומייל. אפשר להסיר בכל רגע.</span>
+              </label>
               <button type="submit" className="lead-submit" disabled={sending}>
                 <span className="btn-text">{sending ? 'שולח...' : 'שלח פרטים'}</span>
                 <span className="circle">

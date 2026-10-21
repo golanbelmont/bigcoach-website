@@ -46,6 +46,8 @@ export async function POST(req: Request) {
     phone: cleanPhone,
     goal: String(body.goal ?? '').trim(),
     discount: !!body.discount,
+    // הסכמה לדיוור שיווקי (חוק התקשורת סעיף 30א). false = מותר רק לחזור לפנייה, לא לשלוח פרסומות
+    marketing: body.marketing === true,
     source: String(body.source ?? 'bigcoach-website'),
     ts: String(body.ts ?? new Date().toISOString()),
   }

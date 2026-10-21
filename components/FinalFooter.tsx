@@ -244,7 +244,7 @@ export default function FinalFooter() {
             <a href="/accessibility.html">הצהרת נגישות</a>
             <a href="/privacy.html">מדיניות פרטיות</a>
           </span>
-          <span className="ft-copy">© 2026 BIG COACH, גולן בלמונט · ח&quot;פ 318259579</span>
+          <span className="ft-copy">© 2026 BIG COACH, גולן בלמונט · עוסק מורשה 318259579</span>
         </div>
       </div>
       <div className="ft-word" aria-hidden="true">
