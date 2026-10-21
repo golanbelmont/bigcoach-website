@@ -151,7 +151,7 @@ export default function LeadPopup() {
                   <option value="שיפור כוח וביצועים">שיפור כוח וביצועים</option>
                   <option value="תזונה ובריאות כללית">תזונה ובריאות כללית</option>
                   <option value="הכנה לקרבי ויחידות מיוחדות">הכנה לקרבי ויחידות מיוחדות</option>
-                  <option value="שיקום פציעות וכאבי גב">שיקום פציעות וכאבי גב</option>
+                  <option value="חזרה לאימון אחרי פציעה או כאבי גב">חזרה לאימון אחרי פציעה או כאבי גב</option>
                   <option value="אחר">אחר</option>
                 </select>
               </div>
